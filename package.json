@@ -1,0 +1,48 @@
+{
+  "name": "stuneed",
+  "version": "1.0.0",
+  "main": "src/index.js",
+  "license": "MIT",
+  "scripts": {
+    "build": "babel src -d dist",
+    "start": "NODE_ENV=production yarn build && node dist",
+    "restart": "rimraf dist && yarn start",
+    "dev": "NODE_ENV=development nodemon --exec yarn start"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.16.3",
+    "await": "^0.2.6",
+    "axios": "^0.24.0",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.2",
+    "connect-redis": "^6.0.0",
+    "cookie-parser": "^1.4.5",
+    "dotenv": "^10.0.0",
+    "ejs": "^3.1.6",
+    "ejs-mate": "^3.0.0",
+    "express": "^4.17.3",
+    "express-handlebars": "^6.0.3",
+    "express-session": "^1.17.2",
+    "http-status": "^1.5.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.0.9",
+    "morgan": "^1.10.0",
+    "multer": "^1.4.3",
+    "nodemailer": "^6.7.2",
+    "nodemon": "^2.0.15",
+    "randomstring": "^1.2.1",
+    "redis": "^3.1.2",
+    "session": "^0.1.0",
+    "sweetalert2": "^9.0.0",
+    "winston": "^3.3.3"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.15.7",
+    "@babel/core": "^7.15.8",
+    "@babel/plugin-proposal-class-properties": "^7.14.5",
+    "@babel/plugin-transform-runtime": "^7.16.4",
+    "@babel/preset-env": "^7.15.8",
+    "babel-plugin-module-resolver": "^4.1.0",
+    "babel-plugin-transform-runtime": "^6.23.0"
+  }
+}

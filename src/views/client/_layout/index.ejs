@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="format-detection" content="telephone=no">
+        <link rel="icon" type="image/x-icon" href="client/images/logo.png">
+        <title><%= `${typeof title != 'undefined' ? `${title} | ` : ''}Something you need` %></title>
+    
+        <link href="https://fonts.googleapis.com/css?family=Barlow:400,600&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="client/css/font-awesome.min.css">
+        <link rel="stylesheet" href="client/css/bootstrap.min.css">
+        <link rel="stylesheet" href="client/css/ion.rangeSlider.css">
+        <link rel="stylesheet" href="client/css/ion.rangeSlider.skinFlat.css">
+        <link rel="stylesheet" href="client/css/jquery.bxslider.css">
+        <link rel="stylesheet" href="client/css/jquery.fancybox.css">
+        <link rel="stylesheet" href="client/css/flexslider.css">
+        <link rel="stylesheet" href="client/css/swiper.css">
+        <link rel="stylesheet" href="client/css/swiper.css">
+        <link rel="stylesheet" href="client/css/style.css">
+        <link rel="stylesheet" href="client/css/media.css">
+
+    </head>
+    <body>
+        <% try{ %>
+            <%- include('headerDn') %>
+        <% }catch(error){ %>
+            <%- include('header') %>
+        <% } %>  
+        
+        <%- body %>
+        <%- include('footer') %>
+        <%- include('plugin') %>
+    </body>
+</html>

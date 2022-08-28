@@ -1,0 +1,248 @@
+<% include partials/main %>
+
+    <head>
+        
+        <% include partials/title-meta %>
+
+        <% include partials/head-css %>
+
+    </head>
+
+    <body data-sidebar="dark">
+
+        <!-- Begin page -->
+        <div id="layout-wrapper">
+
+            <% include partials/menu %>
+
+            <!-- ============================================================== -->
+            <!-- Start right Content here -->
+            <!-- ============================================================== -->
+            <div class="main-content">
+
+                <div class="page-content">
+                    <div class="container-fluid">
+
+                        <% include partials/page-title %>
+
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="card-title">Cập nhật sản phẩm</h4>
+                                        <p class="card-title-desc">Điền đầy đủ các thông tin dưới đây</p>
+                                    <form id="formUpdate" action="/admin/updateProduct/<%= product.productGtin %>" method="put" enctype="multipart/form-data">
+                                        <div class="mb-3 row">    
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="productGtin">Mã sản phẩm</label>
+                                                    <input type="text" class="form-control" id="productGtin" name="productGtin" value="<%= product.productGtin %>" disabled>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-9">
+                                                <div class="form-group">
+                                                    <label for="productName">Tên sản phẩm</label>
+                                                    <input type="text" class="form-control" id="productName" name="productName" value="<%= product.productName %> ">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 row">    
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="productCategory">Danh mục</label>
+                                                    <select class="form-control select2" id="productCategory" name="productCategory">
+                                                        <option value="men" <%= product.productCategory == "men" ? "selected" : "" %>>men</option>
+                                                        <option value="women" <%= product.productCategory == "women" ? "selected" : "" %>>women</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="productType">Loại</label>
+                                                    <select class="form-control select2" id="productType" name="productType">
+                                                        <option value="Đầm và Váy" <%= product.productType == "Đầm và Váy" ? "selected" : "" %> >Đầm và Váy</option>
+                                                        <option value="Áo" <%= product.productType == "Áo" ? "selected" : "" %>>Áo</option>
+                                                        <option value="Quần" <%= product.productType == "Quần" ? "selected" : "" %>>Quần</option>
+                                                        <option value="Mũ" <%= product.productType == "Mũ" ? "selected" : "" %>>Mũ</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="productMaterial">Chất liệu</label>
+                                                    <select class="form-control select2" id="productMaterial" name="productMaterial">
+                                                        <option value="Cotton" <%= product.productMaterial == "Cotton" ? "selected" : "" %>>Cotton</option>
+                                                        <option value="Kaki" <%= product.productMaterial == "Kaki" ? "selected" : "" %>>Kaki</option>
+                                                        <option value="Len" <%= product.productMaterial == "Len" ? "selected" : "" %>>Len</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="productOrigin">Xuất xứ</label>
+                                                    <select class="form-control select2" id="productOrigin" name="productOrigin">
+                                                        <option value="Việt Nam" <%= product.productOrigin == "Việt Nam" ? "selected" : "" %>>Việt Nam</option>
+                                                        <option value="Hàn Quốc" <%= product.productOrigin == "Hàn Quốc" ? "selected" : "" %>>Hàn Quốc</option>
+                                                        <option value="Trung Quốc" <%= product.productOrigin == "Trung Quốc" ? "selected" : "" %>>Trung Quốc</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 row">    
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="productSize">Size</label>
+                                                    <input type="text" class="form-control" id="productSize" name="productSize" value="<%= product.productSize %> ">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="productTags">Thẻ</label>
+                                                    <input type="text" class="form-control" id="productTags" name="productTags" value=<%= product.productTags %> ">
+                                                </div>
+                                            </div>
+                                        </div>  
+                                        <div class="mb-3 row">    
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="productPrice">Giá</label>
+                                                    <input type="text" class="form-control" id="productPrice" name="productPrice" value=<%= product.productPrice %> ">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="productStock">Số lượng</label>
+                                                    <input type="text" class="form-control" id="productStock" name="productStock" value=<%= product.productStock %> ">
+                                                </div>
+                                            </div>
+                                        </div> 
+                                        <div class="mb-3 row">    
+                                            <div class="form-group">
+                                                <label for="productDesc">Mô tả</label>
+                                                <textarea minlength="5" rows="10 type="text" class="form-control" id="productDesc" name="productDesc"><%= product.productDesc  %></textarea>
+                                            </div>
+                                        </div> 
+                                        <div class="mb-3 row">    
+                                            <div class="form-group">
+                                                <label for="productImage">Ảnh đính kèm</label>
+                                                <input type="file" multiple class="form-control" id="productImage" name="images">
+                                            </div>
+                                        </div> 
+                                        <button onclick="update()" type="submit" class="btn btn-success waves-effect waves-light">
+                                            <i class="ri-save-fill"></i> Lưu
+                                        </button>
+                                        <button onclick="deleteProduct()" type="button" class="btn btn-danger waves-effect waves-light">
+                                            <i class=" ri-delete-bin-6-line"></i> Xóa
+                                        </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- container-fluid -->
+                    </div>
+                    <!-- End Page-content -->
+    
+                    <% include partials/footer %>
+    
+                </div>
+                <!-- end main content-->
+    
+            </div>
+            <!-- END layout-wrapper -->
+    
+            <% include partials/right-sidebar %>
+    
+            <% include partials/vendor-scripts %>
+            
+            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+            <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+        function deleteProduct() {
+            const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+                confirmButton: 'btn btn-success',
+                cancelButton: 'btn btn-danger'
+            },
+            buttonsStyling: false
+            })
+
+            swalWithBootstrapButtons.fire({
+            title: 'Bạn có chắc chắn không',
+            text: "Hãy suy nghĩ thật kĩ trước khi xóa nó",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Đồng ý',
+            cancelButtonText: 'Hủy bỏ',
+            reverseButtons: true
+            }).then((result) => {
+            if (result.isConfirmed) {
+            axios({
+                method: "delete",
+                url: "/admin/delete-product/<%= product.productGtin %>",
+            })
+            .then(data=>{
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 3000
+                })
+                if(data.data=='thành công')
+                {
+                    Swal.fire(
+                        '',
+                        'Xóa thành công.',
+                        'success',
+                        'success'
+                    )
+                    setTimeout(() => {
+                        location.replace('/admin/products')
+                    }, 1000);
+                }
+            })
+        }
+        })
+        }
+        function update() {
+            const fileUpload = document.querySelector("#file-input");
+            const form = document.querySelector("#formUpdate");
+            // $('#formUpdate').submit()
+            form.addEventListener("submit", (e) => {
+                    e.preventDefault();
+                    let data = new FormData(form);
+                    console.log(data);
+                    axios({
+                        method: "put",
+                        url: "/admin/updateProduct/<%= product.productGtin %>",
+                        data: data,
+                    })
+                        .then((data) => {
+                            const Toast = Swal.mixin({
+                                toast: true,
+                                position: 'top-end',
+                                showConfirmButton: false,
+                                timer: 3000
+                            })
+                            if(data.data=='thành công')
+                            {
+                                Swal.fire(
+                                    '',
+                                    'Cập nhập thành công.',
+                                    'success',
+                                    'success'
+                                )
+                            }
+                        })
+                        .catch((err) => {
+                            throw err;
+                        });
+            })
+        }
+    </script>
+    
+        </body>
+    
+    </html>
+</div>
+</body>

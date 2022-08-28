@@ -1,0 +1,462 @@
+<% try{ %>
+    <%- layout('client/_layout/index', user.name) %>
+        <% }catch(error){ %>
+            <%- layout('client/_layout/index') %>
+                <% } %>
+				<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+	<!-- Main Content - start -->
+	<main>
+		<section class="container">
+
+
+			<ul class="b-crumbs">
+				<li>
+					<a href="index">
+						Trang chủ
+					</a>
+				</li>
+				<li>
+					<a href="#">
+						Tìm kiếm
+					</a>
+				</li>
+			</ul>
+			<h1 class="main-ttl" style="text-transform: none;font-family:Arial, Helvetica, sans-serif">
+				TÌM KIẾM: Từ khóa '<%= word %>'
+			</h1>
+			<!-- Catalog Sidebar - start -->
+			<div class="section-sb">
+
+				<!-- Filter - start -->
+				<div class="section-filter">
+					<button id="section-filter-toggle" class="section-filter-toggle" data-close="Hide Filter"
+						data-open="Show Filter">
+						<span>Show Filter</span> <i class="fa fa-angle-down"></i>
+					</button>
+					<div class="section-filter-cont">
+						<div class="section-filter-price">
+							<div id="price" class="range-slider section-filter-price" data-step="1000" data-min="0" data-max="1000000" data-from="<%= isPriceBegin%>"
+								data-to="<%= isPriceEnd %>" data-prefix="đ" data-grid="false"></div>
+						</div>
+						
+						<div class="section-filter-item opened">
+							<p class="section-filter-ttl">Chất liệu <i class="fa fa-angle-down"></i></p>
+							<div class="section-filter-fields">
+								<p class="section-filter-field">
+									<% if(isMaterial.indexOf('&material1=Cotton')>-1) {%> 
+									<input checked id="section-filter-checkbox3-1" name='material1' value="Cotton" type="checkbox">
+									<%} else {%> 
+									<input id="section-filter-checkbox3-1" name='material1' value="Cotton" type="checkbox">
+									<% } %> 
+									<label class="section-filter-checkbox"
+										for="section-filter-checkbox3-1">Cotton</label>
+								</p>
+								<p class="section-filter-field">
+									<% if(isMaterial.indexOf('&material2=kaki')>-1) {%> 
+									<input checked id="section-filter-checkbox3-2" name='material2' value="Kaki" type="checkbox">
+									<%} else {%> 
+									<input id="section-filter-checkbox3-2" name='material2' value="Kaki" type="checkbox">
+									<% } %> 
+									<label class="section-filter-checkbox" for="section-filter-checkbox3-2">Kaki</label>
+								</p>
+								<p class="section-filter-field">
+									<% if(isMaterial.indexOf('&material3=Len')>-1) {%> 
+									<input checked id="section-filter-checkbox3-3" name='material3' value="Len" type="checkbox">
+									<%} else {%> 
+									<input id="section-filter-checkbox3-3" name='material3' value="Len" type="checkbox">
+									<% } %>
+									<label class="section-filter-checkbox" for="section-filter-checkbox3-3">Len</label>
+								</p>
+							</div>
+						</div>
+						<div class="section-filter-item opened">
+							<p class="section-filter-ttl">Quốc gia Sản Xuất <i class="fa fa-angle-down"></i></p>
+							<div class="section-filter-fields">
+								<div class="section-filter-select">
+									<select id="origin" style="width:246px;height:40px; text-align: center;"
+										data-placeholder="Manufacturer country">
+										<% if(isOrigin=='&origin=Việt Nam'){ %>
+										<option>Việt Nam</option> 
+										<option>Trung Quốc</option>
+										<option>Hàn Quốc</option>
+										<option value="">Tất cả</option>
+										<% }else if(isOrigin=='&origin=Hàn Quốc'){ %> 
+										<option>Hàn Quốc</option>
+										<option>Việt Nam</option> 
+										<option>Trung Quốc</option>
+										<option value="">Tất cả</option>
+										<% } else if(isOrigin=='&origin=Trung Quốc'){%> 
+										<option>Trung Quốc</option>
+										<option>Việt Nam</option> 
+										<option>Hàn Quốc</option>
+										<option value="">Tất cả</option>
+										<% }  else{ %> 
+										<option value="">Tất cả</option>
+										<option>Trung Quốc</option>
+										<option>Việt Nam</option> 
+										<option>Hàn Quốc</option>
+										<% } %> 
+									</select>
+								</div>
+							</div>
+						</div>
+						<div class="section-filter-buttons" style="display: flex;justify-content: space-evenly;">
+							<input onclick="filter()" style="width: 91px;" class="btn btn-themes" id="set_filter" name="set_filter"
+								value="Áp dụng" type="button">
+							<input onclick="reset()" style="width:58px;" class="btn btn-link" id="del_filter" name="del_filter"
+								value="Đặt lại" type="button">
+						</div>
+					</div>
+				</div>
+				<!-- Filter - end -->
+
+			</div>
+			<!-- Catalog Sidebar - end -->
+			<!-- Catalog Items | List V1 - start -->
+			<div class="section-cont">
+
+				<!-- Catalog Topbar - start -->
+				<div class="section-top">
+
+
+					<!-- Sorting -->
+					<div class="section-sortby">
+						<p style="position: absolute;top: -37px;right:1px">Sắp xếp</p>
+						<ul>
+							<li>
+								<a href="/<%= link %>?page=1&word=<%= word %>&sort=1<%= isMaterial %><%= isOrigin %>&priceBegin=<%= isPriceBegin %>&priceEnd=<%= isPriceEnd %>">Giá từ thấp đến cao</a>
+							</li>
+							<li>
+								<a href="/<%= link %>?page=1&word=<%= word %>&sort=-1<%= isMaterial %><%= isOrigin %>&priceBegin=<%= isPriceBegin %>&priceEnd=<%= isPriceEnd %>">Giá từ cao đến thấp</a>
+							</li>
+							<li>
+								<a href="/<%= link %>?page=1&word=<%= word %>&popular=-1<%= isMaterial %><%= isOrigin %>&priceBegin=<%= isPriceBegin %>&priceEnd=<%= isPriceEnd %>">Bán chạy nhất</a>
+							</li>
+							<li>
+								<a href="/<%= link %>?page=1<%= isMaterial %><%= isOrigin %>&word=<%= word %>&priceBegin=<%= isPriceBegin %>&priceEnd=<%= isPriceEnd %>">Mặc định</a>
+							</li>
+						</ul>
+					</div>
+
+
+
+				</div>
+				
+				<% if(products.length==0){ %>
+					<img style="position: absolute;top: 351px;right: 606px;height: 150px;width: 150px" src="client/images/sorry.png" alt="">
+					<div style="font-family:cursive;position: absolute;font-size: 30px;top: 517px;right: 524px;">Không có sản phẩm nào!</div>
+					<% }%>
+				<!-- Catalog Topbar - end -->
+				<% var i=0 %>
+									<% products.forEach(function (products){ %>
+										<div class="prod-items section-items">
+											<div class="prodlist-i">
+												<a class="prodlist-i-img" href="product?id=<%= products._id %>">
+													<!-- NO SPACE --><img src="<%= products.productImage[0] %>"
+														alt="<%= products.productName %>"><!-- NO SPACE -->
+												</a>
+												<div class="prodlist-i-cont">
+													<h3><a href="product?id=<%= products._id %>">
+															<%= products.productName %>
+														</a></h3>
+													<div class="prodlist-i-txt">
+														Stuneed tự hào là shop thời trang Hàng đầu Việt Nam, Sản phẩm được mọi lứa tuổi săn đón, Luôn cập nhập và ra mắt những mấu thời trang hot nhất .Hợp xu thế của Việt Nam và Thế giới
+													</div>
+													<div class="prodlist-i-skuwrap"
+														style="display: flex;justify-content: space-evenly;">
+														<div class="prodlist-i-skuitem">
+															<p class="prodlist-i-skuttl">Clothes sizes</p>
+															<div class="offer-props-select">
+																<p id="pSize<%= i %>">XS</p>
+																<div style="display: flex;"></div>
+																<ul>
+																	<li><a style="cursor: pointer;">S</a></li>
+																	<li><a style="cursor: pointer;">M</a></li>
+																	<li><a style="cursor: pointer;">L</a></li>
+																	<li class="active"><a
+																			style="cursor: pointer;">XS</a></li>
+																	<li><a style="cursor: pointer;">XL</a></li>
+																	<li><a style="cursor: pointer;">XXL</a></li>
+																	<li><a style="cursor: pointer;">XXXL</a></li>
+																</ul>
+
+															</div>
+
+														</div>
+														<div style="margin-top: 20px;">
+															<span style="font-size: 24px;">
+																<b>
+																	<%= products.productPrice %>₫
+																</b>
+															</span>
+														</div>
+													</div>
+													<div class="prodlist-i-action">
+														<p class="prodlist-i-qnt">
+															<input id="ip<%= i %>" aria-label="quantity" max=10 min=1
+																class="inputQuantity<%= i %>" value="1" type="number">
+															<a class="is-form plus"></a>
+															<a class="is-form minus"></a>
+														</p>
+														<p class="prodlist-i-addwrap">
+															<a id="addProduct<%= i %>" class="prodlist-i-add"
+																style="font-size: 15px;cursor: pointer;">Thêm vào giỏ
+																hàng</a>
+														</p>
+
+
+													</div>
+													<p class="prodlist-i-info" style="margin-left: 37px;">
+														<% try{ %> 
+															<% var tempCompare=true 
+															user.wishlist.forEach(function (wishlist){ 
+																if(wishlist.id == products._id){ %> 
+														<a onclick="love(`<%= products._id %>`)" class="prodlist-i-favorites"><i style="color:palevioletred;cursor: pointer;"
+																	id="love<%= products._id %>" style="cursor: pointer;" class="fa fa-heart"></i> yêu
+																thích</a>
+														<% tempCompare=false } }) 
+														if(tempCompare){ %> 
+															<a onclick="love(`<%= products._id %>`)" class="prodlist-i-favorites"><i style="color:#dadada;cursor: pointer;"
+																	id="love<%= products._id %>" style="cursor: pointer;" class="fa fa-heart"></i> yêu
+																thích</a>
+														<% } %>
+														<% } catch(err){ %>
+															<a onclick="Dontlogin()" class="prodlist-i-favorites"><i style="color:#dadada;cursor: pointer;"
+																	id="love<%= products._id %>" style="cursor: pointer;" class="fa fa-heart"></i> yêu
+																thích</a>
+																<% } %>
+																<% try{ %>
+																<% var tempCompare=true 
+												user.compare.forEach(function (compare){ 
+													if(compare.id==products._id){ %> 
+														<a style="margin-right: 46px;" onclick="compare(`<%= products._id %>`)" class="prodlist-i-compare"><i style="color:#272727;cursor: pointer;"
+																id="compare<%= products._id %>" style="cursor: pointer;" class="fa fa-bar-chart"></i> So sánh</a>
+												<% tempCompare=false } }) 
+												if(tempCompare){ %> 
+													<a style="margin-right: 46px;" onclick="compare(`<%= products._id %>`)" class="prodlist-i-compare"><i style="color:#dadada;cursor: pointer;"
+																id="compare<%= products._id %>" style="cursor: pointer;" class="fa fa-bar-chart"></i> So sánh</a>
+												<% }}catch(err){ %>
+													<a style="margin-right: 46px;" onclick="Dontlogin()" class="prodlist-i-compare"><i style="color:#dadada;cursor: pointer;"
+																id="compare<%= products._id %>" style="cursor: pointer;" class="fa fa-bar-chart"></i> So sánh</a>
+													<%}%>
+													</p>
+												</div>
+
+												<div class="prodlist-i-props-wrap">
+													<ul class="prodlist-i-props">
+														<li><b>Chất Liệu</b>
+															<%= products.productMaterial %>
+														</li>
+														<li><b>Loại</b>
+															<%= products.productType %>
+														</li>
+														<li><b>Phong cách</b>
+															<%= products.productTags %>
+														</li>
+														<li><b>Quốc gia sản xuất</b>
+															<%= products.productOrigin %>
+														</li>
+														<li><b>Sản phẩm có sẵn</b>
+															<%= products.productStock %>
+														</li>
+														<li><b>Lượt mua</b>
+															<%= products.productPurchases %>
+														</li>
+													</ul>
+												</div>
+											</div>
+											<% i++ }) %>
+
+										</div>
+					<!-- Pagination - start -->
+					<ul class="pagi">
+						<!-- <li class="active"><span>1</span></li> -->
+						<%# for(int i=1;i<) %> 
+						
+						<% for (let i=1;i<=total;i++){ %>
+						<% 	if(isSort==0 && isPopular=='no'){ %>
+								<% if(i==page){ %>
+									<li class="active"><a href="#"><%= i %></a></li>
+									<% } else {  %>
+									<li><a href="<%= link %>?page=<%= i %><%= isMaterial %><%= isOrigin %>&priceBegin=<%= isPriceBegin %>&priceEnd=<%= isPriceEnd %>&word=<%= word %>"><%= i %></a></li>
+							<% }
+							}else if(isSort!=0 && isPopular=='no'){ %>
+								<% if(i==page){ %>
+										<li class="active"><a href="#"><%= i %></a></li>
+											<% } else {  %>
+									<li><a href="<%= link %>?page=<%= i %>&sort=<%= isSort %><%= isMaterial %><%= isOrigin %>&priceBegin=<%= isPriceBegin %>&priceEnd=<%= isPriceEnd %>&word=<%= word %>"><%= i %></a></li>
+								<% }
+							}else if(isSort==0 && isPopular=='yes') { %>
+								<% if(i==page){ %>
+										<li class="active"><a href="#"><%= i %></a></li>
+											<% } else {  %>
+									<li><a href="<%= link %>?page=<%= i %>&popular=-1<%= isMaterial %><%= isOrigin %>&priceBegin=<%= isPriceBegin %>&priceEnd=<%= isPriceEnd %>&word=<%= word %>"><%= i %></a></li>
+								<% }
+							}
+						}%> 
+					</ul>
+					<!-- Pagination - end -->
+			</div>
+
+		</section>
+	</main>
+	<script>
+		function filter(){
+			var plant = document.getElementById('price');
+			var fruitCount = plant.getAttribute('data-values')
+			var position = plant.value.lastIndexOf(';');
+			var string='./<%= link %>?page=1&word=<%= word %>&priceBegin='+parseInt(plant.value)+'&priceEnd='+plant.value.slice(position+1)
+			if($('#section-filter-checkbox3-1').is(":checked"))
+				string = string + '&material1='  + $('#section-filter-checkbox3-1').val()
+			if($('#section-filter-checkbox3-2').is(":checked"))
+				string = string + '&material2=' + $('#section-filter-checkbox3-2').val()
+			if($('#section-filter-checkbox3-3').is(":checked"))
+				string = string + '&material3='  + $('#section-filter-checkbox3-3').val()
+			if($('#origin').val()!='')
+				string = string + '&origin=' + $('#origin').val()
+			location.replace(string)
+		}	
+		function reset(){
+			location.replace('./<%= link %>&')
+		}
+	</script>
+	<!-- Main Content - end -->
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+					<script>
+						function Dontlogin(){
+							const Toast = Swal.mixin({
+							toast: true,
+							position: 'top-end',
+							showConfirmButton: false,
+							timer: 3000
+							})
+							Toast.fire({
+								type: "warning",
+								title: 'Bạn cần đăng nhập để sử dụng chức năng này'
+							})
+						}
+						function compare(id) {
+							var url = '/addCompare?id='+id
+							$.ajax({
+								url: url,
+								type: 'PUT',
+								data: {
+								},
+								success: function (data) {
+									if (data == 'Vui lòng đăng nhập') {
+										location.replace('./login')
+									}
+										const Toast = Swal.mixin({
+											toast: true,
+											position: 'top-end',
+											showConfirmButton: false,
+											timer: 3000
+										})
+										if (data == 'Sản phẩm tồn tại') {
+											Toast.fire({
+												type: "warning",
+												title: 'Đã xóa khỏi So sánh'
+											})
+											$.ajax({
+												url: '/removeCompare?id='+id,
+												type: 'DELETE',
+												data: {
+												}
+											})
+											var str = document.getElementById('compareHeader').innerText
+											str = parseInt(str) -1
+											document.getElementById('compareHeader').innerText = str
+											document.getElementById('compare'+id).style.color='#cacaca'
+										}else if (data == 'So sánh đầy') {
+											Toast.fire({
+												type: "warning",
+												title: 'So sánh đầy'
+											})
+										}else if(data == 'Đã thêm'){
+											Toast.fire({
+												type: "success",
+												title: 'Đã Thêm vào So sánh'
+											})
+											var str = document.getElementById('compareHeader').innerText
+											str = parseInt(str) + 1
+											document.getElementById('compareHeader').innerText = str
+											document.getElementById('compare'+id).style.color='#272727'
+										}
+								}
+							})
+						}
+						function love(id){
+								var url = '/addWishlist?id='+id
+							$.ajax({
+								url: url,
+								type: 'PUT',
+								data: {
+								},
+								success: function (data) {
+									if (data == 'Vui lòng đăng nhập') {
+										location.replace('./login')
+									}
+										const Toast = Swal.mixin({
+											toast: true,
+											position: 'top-end',
+											showConfirmButton: false,
+											timer: 3000
+										})
+										if (data == 'Sản phẩm tồn tại') {
+											$.ajax({
+												url: '/removeWishlist?id='+id,
+												type: 'DELETE',
+												data: {
+												}
+											})
+											document.getElementById('love'+id).style.color='#cacaca'
+											var str=document.getElementById('wishlistHeader').innerText
+											str=parseInt(str)-1
+											document.getElementById('wishlistHeader').innerText=str
+										}else if(data == 'Đã thêm'){
+											Toast.fire({
+												type: "success",
+												title: 'Đã Thích ♥'
+											})
+											var str=document.getElementById('wishlistHeader').innerText
+											str=parseInt(str)+1
+											document.getElementById('wishlistHeader').innerText=str
+											document.getElementById('love'+id).style.color='palevioletred'
+										}
+								}
+							})
+						}
+						"<% var temp=0; for (let index = 0; index < i ; index++) { %>"
+						$(`#addProduct<%= index %>`).click(function () {
+							var url = '/addCart?id=<%= products[temp]._id %>&quantity=' + $('.inputQuantity<%= index %>').val() + '&size=' + document.getElementById('pSize<%= index %>').innerText
+							$.ajax({
+								url: url,
+								type: 'PUT',
+								data: {
+								},
+								success: function (data) {
+									if (data == 'Vui lòng đăng nhập') {
+										location.replace('./login')
+									}
+									else {
+										const Toast = Swal.mixin({
+											toast: true,
+											position: 'top-end',
+											showConfirmButton: false,
+											timer: 3000
+										})
+										Toast.fire({
+											type: "success",
+											title: 'Đã Thêm'
+										})
+										if (data != 'Sản phẩm tồn tại') {
+											var str = document.getElementById('cartHeader').innerText
+											str = parseInt(str) + 1
+											document.getElementById('cartHeader').innerText = str
+										}
+									}
+								}
+							})
+						})
+						"<% temp=temp+1 } %>"
+					</script>

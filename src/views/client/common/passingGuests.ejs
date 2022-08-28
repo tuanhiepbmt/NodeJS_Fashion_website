@@ -1,0 +1,398 @@
+<% try{ %>
+    <%- layout('client/_layout/index', user.name) %>
+        <% }catch(error){ %>
+            <%- layout('client/_layout/index') %>
+                <% } %>
+                    <link rel="stylesheet" type="text/css"
+                        href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+                    <link rel="stylesheet"
+                        href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+                    <link href="https://fonts.googleapis.com/css?family=Barlow:400,600&display=swap" rel="stylesheet">
+                    <link rel="stylesheet" href="client/css/font-awesome.min.css">
+                    <link rel="stylesheet" href="client/css/bootstrap.min.css">
+                    <link rel="stylesheet" href="client/css/ion.rangeSlider.css">
+                    <link rel="stylesheet" href="client/css/ion.rangeSlider.skinFlat.css">
+                    <link rel="stylesheet" href="client/css/jquery.bxslider.css">
+                    <link rel="stylesheet" href="client/css/jquery.fancybox.css">
+                    <link rel="stylesheet" href="client/css/flexslider.css">
+                    <link rel="stylesheet" href="client/css/swiper.css">
+                    <link rel="stylesheet" href="client/css/style.css">
+                    <link rel="stylesheet" href="client/css/media.css">
+                    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"
+                        type="text/javascript"></script>
+
+
+                    <main>
+                        <section class="container stylization maincont">
+                            <ul class="b-crumbs">
+                                <li>
+                                    <a href="home">
+                                        Trang chủ
+                                    </a>
+                                </li>
+                                <li>
+                                    <a>
+                                        <span>Thông Tin Khách Hàng</span>
+                                    </a>
+                                </li>
+                            </ul>
+                            <h1 class="main-ttl"><span>Thông Tin Khách Hàng</span></h1>
+                            <div class="container">
+                                <div class="bg-white shadow rounded-lg d-block d-sm-flex">
+                                    <div class="profile-tab-nav border-right" style="min-height: 450px;">
+                                        <div class="p-4">
+                                            <div class="img-circle text-center mb-3">
+                                                <!-- <form action="/uploadAvatar" method="post" id="formAvatar" enctype="multipart/form-data">
+                                                        <label>Ảnh Đại Diện</label>
+                                                        
+                                                        <input id="avatarInfo" name="image" type="file" class="form-control">
+                                                </form> -->
+
+                                                    <label for="file-input">
+                                                        <img 
+                                                            style="cursor: pointer;"
+                                                            src="client/images/logo.png"
+                                                            alt="Image" class="shadow">
+                                                    </label>
+                                            </div>
+                                            <h4 class="text-center">
+                                                Something You Need
+                                            </h4>
+                                        </div>
+                                        <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist"
+                                            aria-orientation="vertical">
+                                            <a class="nav-link active" id="account-tab" data-toggle="pill"
+                                                href="#account" role="tab" aria-controls="account" aria-selected="true">
+                                                <i class="fa fa-edit text-center mr-1"></i>
+                                                Thông Tin Khách Hàng
+                                            </a>
+                                            <a class="nav-link" id="password-tab" data-toggle="pill" href="#password"
+                                                role="tab" aria-controls="password" aria-selected="false">
+                                                <i class="fa fa-book text-center mr-1"></i>
+                                                Nhật kí mua hàng
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="tab-content p-4 p-md-5" id="v-pills-tabContent">
+                                        <div class="tab-pane show active" id="account" role="tabpanel"
+                                            aria-labelledby="account-tab">
+
+                                            <div>
+                                                <h3 class="mb-4">Thông Tin Khách Hàng</h3>
+                                            <div class="mkF">
+                                                <div class="mk">
+                                                    <label style="margin-left:116px">Họ Và Tên</label>
+                                                    <input onkeypress="return runScriptChangeInfo(event)" style="width: 500px" id="nameGuest" type="text"
+                                                        onkeyup="check()" value="<%= user.nameGuest %>" class="form-control">
+
+                                                </div>
+                                                <label style="margin-left:206px">Số Điện Thoại</label>
+                                                <div class="mk" style="display: flex;">
+                                                    <input onkeypress="return runScriptChangeInfo(event)" style="width: 500px" id="phoneNumber" type="text"
+                                                        onkeyup="check()" value="<%= user.phoneNumber %>" class="form-control">
+                                                </div>
+                                                <label style="margin-left:206px">Địa chỉ</label>
+                                                <div class="mk" style="display: flex;">
+                                                    <input onkeypress="return runScriptChangeInfo(event)" style="width: 500px" id="address" type="text"
+                                                        onkeyup="check()" value="<%= user.address %>" class="form-control">
+                                                </div>
+                                                <div class="mk">
+                                                    <div id="err" style="margin-left: 196px;color: red;"></div>
+                                                </div>
+                                            </div>
+
+
+                                            <div style="margin-top: 50px;">
+                                                <button disabled id="changePass" class="btn btn-primary"
+                                                    onclick="changeInfo()">Thay đổi</button>
+                                            </div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane" id="password" role="tabpanel"
+                                            aria-labelledby="password-tab">
+                                            <h3 class="mb-4">Nhật Kí Mua Hàng</h3>
+                                            <div class="diary prod-items section-items prod-tb">
+                                                <% order.forEach(order=> { %>
+                                                    <div class="prodtb-i" id="<%= order._id %>">
+                                                        <div class="prodtb-i-top" style="height: 50px;">
+                                                            <button
+                                                                style="background-color: #fff;border-right: 0px;margin-top: 4px;"
+                                                                class="prodtb-i-toggle" type="button"></button>
+                                                            <h3 class="prodtb-i-ttl"><a style="cursor: auto;">Đơn Hàng
+                                                                    <i
+                                                                        style="position: absolute;top:13px; left: 229px;">Số
+                                                                        Lượng: <%= order.products.length %>
+                                                                            </i></span></a></h3>
+                                                            <div class="prodtb-i-info"
+                                                                style="padding:0px;right:99px;width:201px;">
+                                                                <span style="margin-top:5px" class="prodtb-i-price">
+                                                                    <%= order.status %>
+                                                                </span>
+                                                                <span style="margin-top:1px" class="prodtb-i-price">
+                                                                    <%= order.date %>
+                                                                </span>
+                                                            </div>
+                                                            <p class="prodtb-i-action" style="width: 55px;">
+                                                                <% if(order.status=='Đang chờ xác nhận' ){ %>
+                                                                    <a onclick="removeOrder(`<%= order._id %>`)"
+                                                                        style="cursor: pointer;" class="prodtb-i-buy"><i
+                                                                            class="fa fa-trash"></i></a>
+                                                                    <% } %>
+                                                            </p>
+                                                        </div>
+                                                        <% order.products.forEach(products=> { %>
+                                                            <div class="prodlist-i" id="<%= products.id %>">
+                                                                <div class="prodlist-i-cont">
+
+                                                                    <a class="prodlist-i-img"
+                                                                        href="product?id=<%= products._id %> "><img
+                                                                            style="height:150px;position:relative;"
+                                                                            src="<%= products.productImage %>"
+                                                                            alt=""></a>
+
+                                                                    <div class="diaryItem">
+                                                                        <div>
+                                                                            <h6
+                                                                                style="font-weight:bold;margin: 10px 0 9px 0px;text-align: center;">
+                                                                                <%= products.productName %>
+                                                                            </h6>
+                                                                            <ul class="prodlist-i-props2">
+                                                                                <% if(order.status=='Đang chờ xác nhận'
+                                                                                    ||order.status=='Đang giao hàng' ){
+                                                                                    %>
+                                                                                    <li style="min-width:95%"><span
+                                                                                            style="font-weight: 550;"
+                                                                                            class="prodlist-i-propttl"><span>Ngày
+                                                                                                Đặt Hàng</span></span>
+                                                                                        <span
+                                                                                            style="text-align: right;margin-bottom: 0px;"
+                                                                                            class="prodlist-i-propval">
+                                                                                            <%= order.date %>
+                                                                                        </span></li>
+                                                                                    <% } %>
+                                                                                        <% if(order.status=='Đã mua' ){
+                                                                                            %>
+                                                                                            <li style="min-width:95%">
+                                                                                                <span
+                                                                                                    style="font-weight: 550;"
+                                                                                                    class="prodlist-i-propttl"><span>Ngày
+                                                                                                        Mua
+                                                                                                        Hàng</span></span>
+                                                                                                <span
+                                                                                                    style="text-align: right;margin-bottom: 0px;"
+                                                                                                    class="prodlist-i-propval">
+                                                                                                    <%= order.dateBuy %>
+                                                                                                </span></li>
+                                                                                            <% } %>
+                                                                                                <% if(order.status=='Đang giao hàng'
+                                                                                                    ){ %>
+                                                                                                    <li
+                                                                                                        style="min-width:95%">
+                                                                                                        <span
+                                                                                                            style="font-weight: 550;"
+                                                                                                            class="prodlist-i-propttl"><span>Ngày
+                                                                                                                giao dự
+                                                                                                                kiến</span></span>
+                                                                                                        <span
+                                                                                                            style="text-align: right;margin-bottom: 0px;"
+                                                                                                            class="prodlist-i-propval">
+                                                                                                            <%= order.dateExpected
+                                                                                                                %>
+                                                                                                        </span></li>
+                                                                                                    <% } %>
+                                                                                                        <li
+                                                                                                            style="min-width:95%">
+                                                                                                            <span
+                                                                                                                style="font-weight: 550;"
+                                                                                                                class="prodlist-i-propttl"><span>Số
+                                                                                                                    Lượng</span></span>
+                                                                                                            <span
+                                                                                                                style="text-align: right;margin-bottom: 0px;"
+                                                                                                                class="prodlist-i-propval">
+                                                                                                                <%= products.quantity
+                                                                                                                    %>
+                                                                                                            </span></li>
+                                                                                                        <li
+                                                                                                            style="min-width:95%">
+                                                                                                            <span
+                                                                                                                style="font-weight: 550;"
+                                                                                                                class="prodlist-i-propttl"><span>Size</span></span>
+                                                                                                            <span
+                                                                                                                style="text-align: right;margin-bottom: 0px;"
+                                                                                                                class="prodlist-i-propval">
+                                                                                                                <%= products.size
+                                                                                                                    %>
+                                                                                                            </span></li>
+                                                                                                        <li
+                                                                                                            style="min-width:95%">
+                                                                                                            <span
+                                                                                                                style="font-weight: 550;"
+                                                                                                                class="prodlist-i-propttl"><span>Giá</span></span>
+                                                                                                            <span
+                                                                                                                style="text-align: right;margin-bottom: 0px;"
+                                                                                                                class="prodlist-i-propval">
+                                                                                                                <%= products.productPrice
+                                                                                                                    %>
+                                                                                                            </span></li>
+                                                                            </ul>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <% }) %>
+                                                    </div>
+                                                    <% }); %>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </main>
+                    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+                    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+                    <script>
+                        function removeOrder(id){
+                            Swal.fire({
+                                text: "Bạn có Chắn chắn Hủy Đơn hàng không!",
+                                icon: 'warning',
+                                showCancelButton: true,
+                                confirmButtonColor: '#3085d6',
+                                cancelButtonColor: '#d33',
+                                confirmButtonText: 'Vâng, tôi chắc!'
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    axios({
+                                        method: 'delete',
+                                        url: '/order',
+                                        data: {
+                                            _id:id
+                                        },
+                                    })
+                                    .then(data=>{
+                                        const Toast = Swal.mixin({
+                                        toast: true,
+                                        position: 'top-end',
+                                        showConfirmButton: false,
+                                        timer: 3000
+                                    })
+                                    if(data.data=='Xóa thành công')
+                                    {
+                                        Swal.fire(
+                                            '',
+                                            'Xóa thành Công.',
+                                            'success',
+                                            'success'
+                                        )
+                                        document.getElementById(id).remove()
+                                    }
+                                })
+                                    
+                                }
+                            })
+                        }
+                        $('.topsearch').on('click', '#topsearch-btn', function () {
+                            if ($('body').hasClass('search-show')) {
+                                $('body').removeClass('search-show');
+                            } else {
+                                $('body').addClass('search-show');
+                            }
+                            return false;
+                        });
+
+                        // Search Close
+                        $('body.search-show').on('click', '#topsearch-btn', function () {
+                            if ($('body').hasClass('search-show')) {
+                                $('body').removeClass('search-show');
+                            }
+                            return false;
+                        });
+                        $('html').on('click', 'body.search-show', function () {
+                            $('body').removeClass('search-show');
+                        });
+                        $('body').on('click', '.topsearch', function (event) {
+                            event.stopPropagation();
+                        });
+                    </script>
+                    <script>
+                        if ($('.prodtb-i-toggle').length > 0) {
+        $('.prodtb-i-toggle').on('click', function () {
+            if ($(this).hasClass('opened')) {
+                $(this).removeClass('opened').parents('.prodtb-i').find('.prodlist-i').hide();
+            } else {
+                $(this).addClass('opened').parents('.prodtb-i').find('.prodlist-i').show();
+            }
+            return false;
+        });
+    }
+                        function check() {
+                            var a = document.getElementById('nameGuest')
+                            var b = document.getElementById('phoneNumber')
+                            var c = document.getElementById('address')
+                            
+                            if (a.value != ''|| b.value != ''|| c.value != '' )
+                            {
+                                document.getElementById('changePass').disabled=false
+                            }
+                            else
+                            {
+                                document.getElementById('changePass').disabled=true
+                            }
+                        }
+                        
+                        function changeInfo() {
+                            $.ajax({
+                                url: '/passingGuests',
+                                type: 'PUT',
+                                data: {
+                                    nameGuest: $('#nameGuest').val(),
+                                    address: $('#address').val(),
+                                    phoneNumber: $('#phoneNumber').val(),
+                                },
+                                success: function (data) {
+                                    if (data == 'Thành Công')
+                                    {
+                                        const Toast = Swal.mixin({
+                                            toast: true,
+                                            position: 'top-end',
+                                            showConfirmButton: false,
+                                            timer: 3000
+                                        })
+                                        Toast.fire(
+                                            'Thay đổi Thông tin Thành Công!',
+                                            "",
+                                            'success'
+                                        )
+                                        setTimeout(
+                                            () => {
+                                                location.reload()
+                                            },
+                                            1 * 1000
+                                        );
+                                    }
+                                }
+                            })
+                        }
+                        function runScriptChangeInfo(e) {
+                            //See notes about 'which' and 'key'
+                            if (e.keyCode == 13) {
+                                changeInfo()
+                            }
+                        }
+                    </script>
+                    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+                    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+                    <script src="client/javascripts/jquery-1.11.2.min.js"></script>
+                    <script src="client/javascripts/jquery.bxslider.min.js"></script>
+                    <script src="client/javascripts/fancybox/fancybox.js"></script>
+                    <script src="client/javascripts/fancybox/helpers/jquery.fancybox-thumbs.js"></script>
+                    <script src="client/javascripts/jquery.flexslider-min.js"></script>
+                    <script src="client/javascripts/swiper.jquery.min.js"></script>
+                    <script src="client/javascripts/jquery.waypoints.min.js"></script>
+                    <script src="client/javascripts/progressbar.min.js"></script>
+                    <script src="client/javascripts/ion.rangeSlider.min.js"></script>
+                    <script src="client/javascripts/chosen.jquery.min.js"></script>
+                    <script src="client/javascripts/jQuery.Brazzers-Carousel.js"></script>
+                    <script src="client/javascripts/plugins.js"></script>
+                    <script src="client/javascripts/main.js"></script>

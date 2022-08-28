@@ -1,0 +1,201 @@
+<% include partials/main %>
+
+    <head>
+        
+        <% include partials/title-meta %>
+
+        <link href="assets/libs/dropzone/min/dropzone.min.css" rel="stylesheet" type="text/css" />
+
+        <% include partials/head-css %>
+
+    </head>
+
+    <body data-sidebar="dark">
+
+        <!-- Begin page -->
+        <div id="layout-wrapper">
+
+            <% include partials/menu %>
+
+            <!-- ============================================================== -->
+            <!-- Start right Content here -->
+            <!-- ============================================================== -->
+            <div class="main-content">
+
+                <div class="page-content">
+                    <div class="container-fluid">
+
+                        <% include partials/page-title %>
+
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="card-title">Thêm sản phẩm</h4>
+                                        <p class="card-title-desc">Điền đầy đủ các thông tin dưới đây</p>
+                                    <form id="formAdd" action="/admin/addProduct" method="put" enctype="multipart/form-data">
+                                        <div class="mb-3 row">    
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="productGtin">Mã sản phẩm</label>
+                                                    <input disabled type="text" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-9">
+                                                <div class="form-group">
+                                                    <label for="productName">Tên sản phẩm</label>
+                                                    <input type="text" class="form-control" id="productName" name="productName">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 row">    
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="productCategory">Danh mục</label>
+                                                    <select class="form-control select2" id="productCategory" name="productCategory">
+                                                        <option value="men">men</option>
+                                                        <option value="women">women</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="productType">Loại</label>
+                                                    <select class="form-control select2" id="productType" name="productType">
+                                                        <option value="Đầm và Váy">Đầm và Váy</option>
+                                                        <option value="Áo">Áo</option>
+                                                        <option value="Quần">Quần</option>
+                                                        <option value="Mũ">Mũ</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="productMaterial">Chất liệu</label>
+                                                    <select class="form-control select2" id="productMaterial" name="productMaterial">
+                                                        <option value="Cotton">Cotton</option>
+                                                        <option value="Kaki">Kaki</option>
+                                                        <option value="Len">Len</option>
+                                                        <option value="Jean">Jean</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="productOrigin">Xuất xứ</label>
+                                                    <select class="form-control select2" id="productOrigin" name="productOrigin">
+                                                        <option value="Việt Nam">Việt Nam</option>
+                                                        <option value="Hàn Quốc">Hàn Quốc</option>
+                                                        <option value="Trung Quốc">Trung Quốc</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 row">    
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="productSize">Size</label>
+                                                    <input type="text" class="form-control" id="productSize" name="productSize">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="productTags">Thẻ</label>
+                                                    <input type="text" class="form-control" id="productTags" name="productTags">
+                                                </div>
+                                            </div>
+                                        </div>  
+                                        <div class="mb-3 row">    
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="productPrice">Giá</label>
+                                                    <input type="text" class="form-control" id="productPrice" name="productPrice">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="productStock">Số lượng</label>
+                                                    <input type="text" class="form-control" id="productStock" name="productStock">
+                                                </div>
+                                            </div>
+                                        </div> 
+                                        <div class="mb-3 row">    
+                                            <div class="form-group">
+                                                <label for="productDesc">Mô tả</label>
+                                                <textarea minlength="5" rows="10 type="text" class="form-control" id="productDesc" name="productDesc"></textarea>
+                                            </div>
+                                        </div> 
+                                        <div class="mb-3 row">    
+                                            <div class="form-group">
+                                                <label for="productImage">Ảnh đính kèm</label>
+                                                <input type="file" multiple class="form-control" id="productImage" name="images">
+                                            </div>
+                                        </div> 
+                                            <input onclick="update()" id="add-btn" class="btn btn-primary" type="submit" value="Thêm sản phẩm">
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- container-fluid -->
+                    </div>
+                    <!-- End Page-content -->
+    
+                    <% include partials/footer %>
+    
+                </div>
+                <!-- end main content-->
+    
+            </div>
+            <!-- END layout-wrapper -->
+    
+            <% include partials/right-sidebar %>
+    
+            <% include partials/vendor-scripts %>
+    
+            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+            <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    
+        </body>
+    
+    </html>
+</div>
+</body>
+<script>
+    function update() {
+            const form = document.querySelector("#formAdd");
+            // $('#formUpdate').submit()
+            form.addEventListener("submit", (e) => {
+                    e.preventDefault();
+                    let data = new FormData(form);
+                    axios({
+                        method: "put",
+                        url: "/admin/addProduct",
+                        data: data,
+                    })
+                        .then((data) => {
+                            const Toast = Swal.mixin({
+                                toast: true,
+                                position: 'top-end',
+                                showConfirmButton: false,
+                                timer: 3000
+                            })
+                            if(data.data=='thành công')
+                            {
+                                Swal.fire(
+                                    '',
+                                    'Thêm thành công.',
+                                    'success',
+                                    'success'
+                                )
+                            }
+                            else
+                                alert(data.data)
+                        })
+                        .catch((err) => {
+                            throw err;
+                        });
+            })
+        }
+</script>

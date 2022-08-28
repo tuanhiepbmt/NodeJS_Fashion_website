@@ -1,0 +1,263 @@
+<% include partials/main %>
+
+    <head>
+
+        <% include partials/title-meta %>
+
+            <!-- Responsive Table css -->
+            <link href="/assets/libs/admin-resources/rwd-table/rwd-table.min.css" rel="stylesheet" type="text/css" />
+
+            <% include partials/head-css %>
+
+    </head>
+
+    <body data-sidebar="dark">
+
+        <!-- Begin page -->
+        <div id="layout-wrapper">
+
+            <script>
+                function setCookie(cname, cvalue, exdays) {
+                    const d = new Date();
+                    d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+                    let expires = "expires=" + d.toUTCString();
+                    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+                }
+            </script>
+            <header id="page-topbar">
+                <div class="navbar-header">
+                    <div class="d-flex">
+                        <!-- LOGO -->
+                        <div class="navbar-brand-box text-center">
+                            <a href="/admin" class="logo logo-dark">
+                                <span class="logo-sm">
+                                    <img src="/assets/images/logo.png" alt="logo-sm-dark" height="22">
+                                </span>
+                                <span class="logo-lg">
+                                    <img src="/assets/images/logo.png" alt="logo-dark" height="24">
+                                </span>
+                            </a>
+
+                            <a href="/admin" class="logo logo-light">
+                                <span class="logo-sm">
+                                    <img src="/assets/images/logo.png" alt="logo-sm-light" height="22">
+                                </span>
+                                <span class="logo-lg">
+                                    <img src="/assets/images/logo.png" alt="logo-light" height="60">
+                                </span>
+                            </a>
+                        </div>
+
+                        <button type="button" class="btn btn-sm px-3 font-size-24 header-item waves-effect" id="vertical-menu-btn">
+                            <i class="ri-menu-2-line align-middle"></i>
+                        </button>
+
+                    </div>
+
+                    <div class="d-flex">
+
+
+
+
+
+                        <div class="dropdown d-inline-block user-dropdown">
+                            <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <img class="rounded-circle header-profile-user" src="/assets/images/logo.png"
+                                    alt="Header Avatar">
+                                <span class="d-none d-xl-inline-block ms-1">Stuneed</span>
+                                <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-end">
+                                <!-- item-->
+                                <a class="dropdown-item text-danger" href="javascript:setCookie('tokenAdmin','',0);location.replace('./admin/login');"><i class="ri-shut-down-line align-middle me-1 text-danger"></i>Đăng xuất</a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </header>
+            <!-- ========== Left Sidebar Start ========== -->
+            <div class="vertical-menu">
+
+                <div data-simplebar class="h-100">
+
+                    <!--- Sidemenu -->
+                    <div id="sidebar-menu">
+                        <!-- Left Menu Start -->
+                        <ul class="metismenu list-unstyled" id="side-menu">
+                            <li class="menu-title">Menu</li>
+
+                            <li>
+                                <a href="/admin" class="waves-effect">
+                                    <i class="mdi mdi-home-variant-outline"></i>
+                                    <span>Trang chủ</span>
+                                </a>
+                            </li>
+
+
+                            <li class="menu-title">Các thành phần</li>
+
+                            <li>
+                                <a href="/admin/users" class="waves-effect">
+                                    <i class="ri-file-user-fill"></i>
+                                    <span>Người dùng</span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="javascript: void(0);" class="waves-effect">
+                                    <i class="ri-printer-line"></i>
+                                    <span class="badge rounded-pill bg-danger float-end"><%= orderWC.length %></span>
+                                    <span>Đơn hàng</span>
+                                </a>
+                                <ul class="sub-menu" aria-expanded="false">
+                                    <li><a href="/admin/orders">Tất cả đơn hàng</a></li>
+                                    <li><a href="/admin/order1">Chờ xác nhận<span class="badge rounded-pill bg-danger float-end"><%= orderWC.length %></span></a></li>
+                                    <li><a href="/admin/order2">Đang giao hàng</a></li>
+                                    <li><a href="/admin/order3">Đã giao hàng</a></li>
+                                </ul>
+                            </li>
+
+                            <li>
+                                <a href="javascript: void(0);" class="has-arrow waves-effect">
+                                    <i class=" ri-store-fill"></i>
+                                    <span>Sản phẩm</span>
+                                </a>
+                                <ul class="sub-menu" aria-expanded="false">
+                                    <li><a href="/admin/products">Tất cả sản phẩm</a></li>
+                                    <li><a href="/admin/add-product">Thêm sản phẩm</a></li>
+                                </ul>
+                            </li>
+
+
+                        </ul>
+                    </div>
+                    <!-- Sidebar -->
+                </div>
+            </div>
+            <!-- Left Sidebar End -->
+
+            <!-- ============================================================== -->
+            <!-- Start right Content here -->
+            <!-- ============================================================== -->
+            <div class="main-content">
+
+                <div class="page-content">
+                    <div class="container-fluid">
+
+                        <% include partials/page-title %>
+
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="card">
+                                        <div class="card-body">
+
+                                            <h4 class="card-title">Tất cả sản phẩm</h4>
+                                            <div class="table-rep-plugin">
+                                                <div class="table-responsive mb-0" data-pattern="priority-columns">
+                                                    <table id="tech-companies-1" class="table table-striped">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Mã sản phẩm</th>
+                                                                <th data-priority="1">Ảnh sản phẩm</th>
+                                                                <th data-priority="1">Tên sản phẩm</th>
+                                                                <th data-priority="3">Danh mục</th>
+                                                                <th data-priority="1">Loại</th>
+                                                                <th data-priority="3">Chất liệu</th>
+                                                                <th data-priority="3">Size</th>
+                                                                <th data-priority="1">Giá</th>
+                                                                <th data-priority="1">Số lượng kho</th>
+                                                                <th data-priority="3">Xuất xứ</th>
+                                                                <th data-priority="1">Lượt mua</th>
+                                                                <th data-priority="3">Ngày thêm</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <% products.forEach((product) => { %>
+                                                            <tr>
+                                                                <td>
+                                                                    <%= product.productGtin %>
+                                                                </td>
+                                                                <% if(product.productImage[0].indexOf('client/images/')==-1){ %>
+                                                                    <td><img class="card-img img-fluid" src="<%= product.productImage[0] %>" alt="Card image"></td>
+                                                                    <% }else{ %>
+                                                                        <td><img class="card-img img-fluid" src="/<%= product.productImage[0] %>" alt="Card image"></td>
+                                                                        <% } %>
+                                                                            <td>
+                                                                                <%= product.productName %>
+                                                                            </td>
+                                                                            <td>
+                                                                                <%= product.productCategory %>
+                                                                            </td>
+                                                                            <td>
+                                                                                <%= product.productType %>
+                                                                            </td>
+                                                                            <td>
+                                                                                <%= product.productMaterial %>
+                                                                            </td>
+                                                                            <td>
+                                                                                <%= product.productSize %>
+                                                                            </td>
+                                                                            <td>
+                                                                                <%= product.productPrice %>
+                                                                            </td>
+                                                                            <td>
+                                                                                <%= product.productStock %>
+                                                                            </td>
+                                                                            <td>
+                                                                                <%= product.productOrigin %>
+                                                                            </td>
+                                                                            <td>
+                                                                                <%= product.productPurchases %>
+                                                                            </td>
+                                                                            <td>
+                                                                                <%= product.productAddedDate %>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input class="btn btn-primary" type="button" value="Sửa" onclick="handleUpdateProduct('<%= product.productGtin %>')">
+                                                                            </td>
+                                                            </tr>
+                                                            <% }) %>
+                                                    </table>
+                                                    <script>
+                                                        function handleUpdateProduct(value) {
+                                                            $(location).attr('href', '/admin/update-product/' + value);
+                                                        }
+                                                    </script>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- end col -->
+                            </div>
+                            <!-- end row -->
+                    </div>
+                    <!-- container-fluid -->
+                </div>
+                <!-- End Page-content -->
+
+                <% include partials/footer %>
+
+            </div>
+            <!-- end main content-->
+
+        </div>
+        <!-- END layout-wrapper -->
+
+        <% include partials/right-sidebar %>
+
+            <% include partials/vendor-scripts %>
+
+                <!-- Responsive Table js -->
+                <script src="/assets/libs/admin-resources/rwd-table/rwd-table.min.js"></script>
+
+                <!-- Init js -->
+                <script src="/assets/js/pages/table-responsive.init.js"></script>
+
+                <script src="/assets/js/app.js"></script>
+
+    </body>
+
+    </html>

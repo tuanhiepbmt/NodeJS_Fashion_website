@@ -1,0 +1,22 @@
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="description" content="Something you need" />
+    <link rel="apple-touch-icon" href="/logo192.png" />
+    <title></title>
+    <link href="/common/css/main.css" rel="stylesheet" />
+    <link href="/common/css/error.css" rel="stylesheet" />
+  </head>
+  <body>
+    <div class="container">
+      <p class="error_code"><%= error.statusCode %></p>
+      <p class="error_content"><%= error.message %></p>
+      <button class="ui primary button">
+        Trở lại trang chủ
+      </button>
+    </div>
+  </body>
+</html>

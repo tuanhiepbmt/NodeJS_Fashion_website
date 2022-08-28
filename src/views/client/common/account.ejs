@@ -1,0 +1,785 @@
+<% try{ %>
+    <%- layout('client/_layout/index', user.name) %>
+        <% }catch(error){ %>
+            <%- layout('client/_layout/index') %>
+                <% } %>
+                    <link rel="stylesheet" type="text/css"
+                        href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+                    <link rel="stylesheet"
+                        href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+                    <link href="https://fonts.googleapis.com/css?family=Barlow:400,600&display=swap" rel="stylesheet">
+                    <link rel="stylesheet" href="client/css/font-awesome.min.css">
+                    <link rel="stylesheet" href="client/css/bootstrap.min.css">
+                    <link rel="stylesheet" href="client/css/ion.rangeSlider.css">
+                    <link rel="stylesheet" href="client/css/ion.rangeSlider.skinFlat.css">
+                    <link rel="stylesheet" href="client/css/jquery.bxslider.css">
+                    <link rel="stylesheet" href="client/css/jquery.fancybox.css">
+                    <link rel="stylesheet" href="client/css/flexslider.css">
+                    <link rel="stylesheet" href="client/css/swiper.css">
+                    <link rel="stylesheet" href="client/css/style.css">
+                    <link rel="stylesheet" href="client/css/media.css">
+                    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+
+
+                    <main>
+                        <section class="container stylization maincont">
+                            <ul class="b-crumbs">
+                                <li>
+                                    <a href="home">
+                                        Trang chủ
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="login">
+                                        <span>Tài Khoản</span>
+                                    </a>
+                                </li>
+                            </ul>
+                            <h1 class="main-ttl"><span>Tài Khoản</span></h1>
+                            <div class="container">
+                                <div class="bg-white shadow rounded-lg d-block d-sm-flex">
+                                    <div class="profile-tab-nav border-right">
+                                        <div class="p-4">
+                                            <div class="img-circle text-center mb-3">
+                                                <!-- <form action="/uploadAvatar" method="post" id="formAvatar" enctype="multipart/form-data">
+                                                        <label>Ảnh Đại Diện</label>
+                                                        
+                                                        <input id="avatarInfo" name="image" type="file" class="form-control">
+                                                </form> -->
+
+                                                <form class="image-upload" action="/uploadAvatar" method="post"
+                                                    id="formAvatar" enctype="multipart/form-data">
+                                                    <label for="file-input">
+                                                        <img id="mayAnh" onmouseenter="avatarCheckIn()"
+                                                            onmouseleave="avatarCheckOut()"
+                                                            style="cursor: pointer;;margin-top: 19px;margin-left: 99px;border-radius: 0;border: 0;width:60px;height: 60px;position: absolute;opacity: 0.7;display: none;"
+                                                            src="client/images/mayAnh.png" alt="">
+                                                        <img onmouseenter="avatarCheckIn()"
+                                                            onmouseleave="avatarCheckOut()"
+                                                            style="cursor: pointer;;object-fit:cover;"
+                                                            src="client/images/uploadAvatar/<%= user.avatar %>"
+                                                            alt="Image" class="shadow">
+                                                    </label>
+                                                    <input type="text" name="email" value="<%= user.email %>"
+                                                        style="display: none;">
+                                                    <input id="file-input" name="image" type="file">
+                                                </form>
+                                            </div>
+                                            <h4 class="text-center">
+                                                <%= user.name %>
+                                            </h4>
+                                        </div>
+                                        <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist"
+                                            aria-orientation="vertical">
+                                            <a class="nav-link active" id="account-tab" data-toggle="pill"
+                                                href="#account" role="tab" aria-controls="account" aria-selected="true">
+                                                <i class="fa fa-home text-center mr-1"></i>
+                                                Thông tin tài Khoản
+                                            </a>
+                                            <a class="nav-link" id="password-tab" data-toggle="pill" href="#password"
+                                                role="tab" aria-controls="password" aria-selected="false">
+                                                <i class="fa fa-edit text-center mr-1"></i>
+                                                Thay đổi thông tin
+                                            </a>
+                                            <a class="nav-link" id="security-tab" data-toggle="pill" href="#security"
+                                                role="tab" aria-controls="security" aria-selected="false">
+                                                <i class="fa fa-key text-center mr-1"></i>
+                                                Đổi mật khẩu
+                                            </a>
+                                            <a class="nav-link" id="application-tab" data-toggle="pill"
+                                                href="#application" role="tab" aria-controls="application"
+                                                aria-selected="false">
+                                                <i class="fa fa-shield text-center mr-1"></i>
+                                                Bảo vệ tài khoản
+                                            </a>
+                                            <a class="nav-link" id="notification-tab" data-toggle="pill"
+                                                href="#notification" role="tab" aria-controls="notification"
+                                                aria-selected="false">
+                                                <i class="fa fa-book text-center mr-1"></i>
+                                                Nhật kí mua hàng
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="tab-content p-4 p-md-5" id="v-pills-tabContent">
+                                        <div class="tab-pane show active" id="account" role="tabpanel"
+                                            aria-labelledby="account-tab">
+
+                                            <div class="thongTinF">
+                                                <div class="thongTin">
+                                                    <h3 style="margin-bottom: 80px;">THÔNG TIN TÀI KHOẢN</h3>
+                                                    <h6>Họ và Tên : <%= user.name %>
+                                                    </h6>
+                                                    <h6>Ngày Sinh : <%= user.date %>
+                                                    </h6>
+                                                    <h6>Số Điện Thoại : <%= user.phoneNumber %>
+                                                    </h6>
+                                                    <h6>Email : <%= user.email %>
+                                                    </h6>
+                                                    <h6>Giới Tính : <%= user.sex %>
+                                                    </h6>
+                                                </div>
+                                                <div class="hinhAnh">
+                                                    <img style="width:300px;height: 400px;object-fit: cover;border: 4px solid;
+                                                    border-image-source: linear-gradient(to right, #f64f59, #c471ed, #12c2e9); 
+                                                    border-image-slice :1;"
+                                                        src="client/images/uploadAvatar/<%= user.avatar %>" alt="">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane" id="password" role="tabpanel"
+                                            aria-labelledby="password-tab">
+                                            <h3 class="mb-4">Thông tin</h3>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label>Họ và Tên</label>
+                                                        <input onkeypress="return runScriptChangeInfo(event)" id="tenInfo" type="text" class="form-control"
+                                                            value="<%= user.name %>">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label>Ngày Sinh</label>
+                                                        <input onkeypress="return runScriptChangeInfo(event)" id="dateInfo" type="text" class="form-control"
+                                                            value="<%= user.date %>">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label>Địa Chỉ</label>
+                                                        <input onkeypress="return runScriptChangeInfo(event)" id="addressInfo" type="text" class="form-control"
+                                                            value="<%= user.address %>">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label>Số Điện Thoại</label>
+                                                        <input onkeypress="return runScriptChangeInfo(event)" id="phoneNumberInfo" type="text" class="form-control"
+                                                            value="<%= user.phoneNumber %>">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6" style="display: flex;">
+                                                    <div class="form-group" style="margin: auto;">
+                                                        Giới Tính
+                                                        <select id="sexInfo"
+                                                            style="width: 100px; height: 25px; margin-left: 10px;">
+                                                            <% if(user.sex=='Nữ' ){%>
+                                                                <option value="Nữ" selected="selected">Nữ</option>
+                                                                <option value="Nam">Nam</option>
+                                                                <%}else{%>
+                                                                    <option value="Nam" selected="selected">Nam</option>
+                                                                    <option value="Nữ">Nữ</option>
+                                                                    <% } %>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label>Mật Khẩu</label>
+                                                        <input onkeypress="return runScriptChangeInfo(event)" id="passwordInfo" type="password" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div id="errmk" style="margin-left: 167px;color: red;"></div>
+                                            </div>
+                                            <div>
+                                                <button class="btn btn-primary" onclick="changeInfo()">Thay Đổi</button>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane" id="security" role="tabpanel"
+                                            aria-labelledby="security-tab">
+
+                                            <h3 class="mb-4">ĐỔI MẬT KHẨU</h3>
+                                            <div class="mkF">
+                                                <input type="text" id="emailFree" name="email" style="display: none;"
+                                                    value="<%= user.email %>">
+                                                <div class="mk">
+                                                    <label>Mật Khẩu cũ</label>
+                                                    <input onkeypress="return runScriptChangePass(event)" style="width: 500px" id="nowPass" type="password"
+                                                        class="form-control">
+
+                                                </div>
+                                                <label>Mật Khẩu Mới</label>
+                                                <div class="mk" style="display: flex;">
+                                                    <input onkeypress="return runScriptChangePass(event)" style="width: 500px" id="newPass" type="password"
+                                                        onkeyup="check()" class="form-control">
+                                                    <div id="z-passwordCr"></div>
+                                                </div>
+                                                <label>Nhập Lại Mật Khẩu</label>
+                                                <div class="mk" style="display: flex;">
+                                                    <input onkeypress="return runScriptChangePass(event)" style="width: 500px" id="newPassA" type="password"
+                                                        onkeyup="check()" class="form-control">
+                                                    <div id="z-passwordCrA"></div>
+                                                </div>
+                                                <div class="mk">
+                                                    <div id="err" style="margin-left: 196px;color: red;"></div>
+                                                </div>
+                                            </div>
+
+
+                                            <div style="margin-top: 50px;">
+                                                <button disabled id="changePass" class="btn btn-primary" onclick="changePassClick()">Thay
+                                                    Đổi</button>
+                                            </div>
+
+                                        </div>
+                                        <div class="tab-pane" id="application" role="tabpanel"
+                                            aria-labelledby="application-tab">
+                                            <h3 class="mb-4">Bảo Vệ Tài Khoản</h3>
+                                            <P>Cảnh báo! Không đưa tài khoản của mình cho bất kì ai, hoặc đăng nhập vào
+                                                cách trang web có đường link lạ, Trong trường hợp bị mất tài khoản hãy
+                                                liên hệ với chúng tôi để được tư vấn và hỗ trợ tìm lại tài khoản.</P>
+                                            <h5>Email bảo vệ: <%= user.email %>
+                                            </h5>
+                                            <div id="changeA">
+                                                <button onclick="sendMxn()">Thay Đổi Email</button>
+                                                <div id="mxn" style="display: none;">
+                                                    <label>Nhập Mã Xác Nhận Từ Email</label>
+                                                    <div onkeypress="return runScriptChangeOldOtp(event)" onkeyup="checkOtp()" style="width: 200px; margin-left: 252px;">
+                                                        <input id="mxnInput" type="text" class="form-control"
+                                                            placeholder="Ví Dụ: 123456" undisabled>
+                                                    </div>
+                                                    <button disabled id="xnEmailInput" onclick="XnEmail()"
+                                                        class="btn btn-primary" style="margin-top: 20px;">Tiếp
+                                                        theo</button>
+                                                </div>
+                                            </div>
+                                            <div id="changeB" style="display: none;">
+                                                <label>Email mới!</label>
+                                                <div style="width: 200px; margin-left: 161px;">
+                                                    <input onkeypress="return runScriptNewEmail(event)" id="emailNew" style="width:391px" type="text"
+                                                        class="form-control" placeholder="Ví Dụ: nguyenvana@gmail.com"
+                                                        undisabled>
+                                                </div>
+                                                <div id="errdivAccount" style="margin-left: 302px;"></div>
+                                                <button id="buttonEmailNew" onclick="sendOtp()" class="btn btn-primary"
+                                                    style="margin-top: 20px;display: block;">Xác Nhận</button>
+                                                <div id="changeF" style="display: none;">
+                                                    <div style="width: 200px; margin-left: 253px;">
+                                                        <label>Nhập Mã Xác Nhận Từ Email</label>
+                                                        <div style="width: 200px; margin-left: -1px;">
+                                                            <input onkeypress="return runScriptNewEmailOtp(event)" id="mxnInputN" type="text" class="form-control"
+                                                                placeholder="Ví Dụ: 123456" undisabled>
+                                                        </div>
+                                                        <button id="buttonEmailnew" onclick="changeEmail()"
+                                                            class="btn btn-primary"
+                                                            style="margin-top: 20px;margin-left: -31px;">Thay
+                                                            Đổi</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane" id="notification" role="tabpanel"
+                                            aria-labelledby="notification-tab">
+                                            <h3 class="mb-4">Nhật Kí Mua Hàng</h3>
+                                            <div class="diary prod-items section-items prod-tb">
+                                                <% order.forEach(order => { %> 
+                                                <div class="prodtb-i" id="<%= order._id %>">
+                                                    <div class="prodtb-i-top" style="height: 50px;">
+                                                        <button style="background-color: #fff;border-right: 0px;margin-top: 4px;" class="prodtb-i-toggle" type="button"></button>
+                                                        <h3 class="prodtb-i-ttl"><a style="cursor: auto;">Đơn Hàng <i style="position: absolute;top:13px; left: 229px;">Số Lượng: <%= order.products.length %></i></span></a></h3>
+                                                        <div class="prodtb-i-info" style="padding:0px;right:99px;width:201px;">
+                                                        <span  style="margin-top:5px" class="prodtb-i-price">
+                                                            <%= order.status %> 
+                                                            </span>
+                                                            <% if(order.status=='Đã giao hàng'){ %> 
+                                                                <span style="margin-top:1px" class="prodtb-i-price"><%= order.dateBuy %></span> 
+                                                            <% }else{ %> 
+                                                                <span style="margin-top:1px" class="prodtb-i-price"><%= order.date %></span>
+                                                            <% } %>  
+                                                        </div>
+                                                        <p class="prodtb-i-action" style="width: 55px;">
+                                                            <% if(order.status=='Đang chờ xác nhận'){ %> 
+                                                            <a onclick="removeOrder(`<%= order._id %>`)" style="cursor: pointer;" class="prodtb-i-buy"><i class="fa fa-trash"></i></a>
+                                                            <% } %> 
+                                                        </p>
+                                                    </div>
+                                                    <% order.products.forEach(products => { %> 
+                                                    <div class="prodlist-i" id="<%= products.id %>">
+                                                        <div class="prodlist-i-cont">
+                                                            
+                                                                <a class="prodlist-i-img" href="product?id=<%= products._id %> "><img style="height:150px;position:relative;" src="<%= products.productImage %>" alt=""></a>
+                                                                
+                                                                <div class="diaryItem">
+                                                                    <div>
+                                                                        <h6 style="font-weight:bold;margin: 10px 0 9px 0px;text-align: center;"><%= products.productName %></h6>
+                                                                        <ul class="prodlist-i-props2">
+                                                                            <% var dateExpected= order.date.replace( order.date.substring(0,2), parseInt(order.date.substring(0,2))+7).split(' ')[0] %> 
+                                                                            <% if(order.status=='Đang chờ xác nhận'||order.status=='Đang giao hàng'){ %> 
+                                                                            <li style="min-width:95%"><span style="font-weight: 550;" class="prodlist-i-propttl"><span>Ngày Đặt Hàng</span></span> <span style="text-align: right;margin-bottom: 0px;" class="prodlist-i-propval"><%= order.date %></span></li>
+                                                                            <% } %> 
+                                                                            <% if(order.status=='Đã giao hàng'){ %> 
+                                                                            <li style="min-width:95%"><span style="font-weight: 550;" class="prodlist-i-propttl"><span>Ngày Mua Hàng</span></span> <span style="text-align: right;margin-bottom: 0px;" class="prodlist-i-propval"><%= order.dateBuy %></span></li>
+                                                                            <% } %> 
+                                                                            <% if(order.status=='Đang giao hàng'){ %> 
+                                                                            <li style="min-width:95%"><span style="font-weight: 550;" class="prodlist-i-propttl"><span>Ngày giao dự kiến</span></span> <span style="text-align: right;margin-bottom: 0px;" class="prodlist-i-propval"><%= dateExpected %></span></li>
+                                                                            <% } %> 
+                                                                            <li style="min-width:95%"><span style="font-weight: 550;" class="prodlist-i-propttl"><span>Số Lượng</span></span> <span style="text-align: right;margin-bottom: 0px;" class="prodlist-i-propval"><%= products.quantity %></span></li>
+                                                                            <li style="min-width:95%"><span style="font-weight: 550;" class="prodlist-i-propttl"><span>Size</span></span> <span style="text-align: right;margin-bottom: 0px;" class="prodlist-i-propval"><%= products.size %></span></li>
+                                                                            <li style="min-width:95%"><span style="font-weight: 550;" class="prodlist-i-propttl"><span>Giá</span></span> <span style="text-align: right;margin-bottom: 0px;" class="prodlist-i-propval"><%= products.productPrice %></span></li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                        </div>
+                                                    </div>
+                                                <% }) %> 
+                                                </div><% }); %> 
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </main>
+                    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+                    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+                    <script>
+                        function removeOrder(id){
+                            Swal.fire({
+                                text: "Bạn có Chắn chắn Hủy Đơn hàng không!",
+                                icon: 'warning',
+                                showCancelButton: true,
+                                confirmButtonColor: '#3085d6',
+                                cancelButtonColor: '#d33',
+                                confirmButtonText: 'Vâng, tôi chắc!'
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    axios({
+                                        method: 'delete',
+                                        url: '/order',
+                                        data: {
+                                            _id:id
+                                        },
+                                    })
+                                    .then(data=>{
+                                        const Toast = Swal.mixin({
+                                        toast: true,
+                                        position: 'top-end',
+                                        showConfirmButton: false,
+                                        timer: 3000
+                                    })
+                                    if(data.data=='Xóa thành công')
+                                    {
+                                        Swal.fire(
+                                            '',
+                                            'Xóa thành Công.',
+                                            'success',
+                                            'success'
+                                        )
+                                        document.getElementById(id).remove()
+                                    }
+                                })
+                                    
+                                }
+                            })
+                        }
+                    </script>
+                    <script>
+                        if ($('.prodtb-i-toggle').length > 0) {
+        $('.prodtb-i-toggle').on('click', function () {
+            if ($(this).hasClass('opened')) {
+                $(this).removeClass('opened').parents('.prodtb-i').find('.prodlist-i').hide();
+            } else {
+                $(this).addClass('opened').parents('.prodtb-i').find('.prodlist-i').show();
+            }
+            return false;
+        });
+    }
+                        function sendOtp() {
+                            function validateEmail(email) {
+                                const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                                return re.test(email);
+                            }
+                            if ($('#emailNew').val() == "") {
+                                document.getElementById('errdivAccount').innerHTML = '<p id="perrDk" >Vui lòng nhập Email</p>'
+                            }
+                            else if (validateEmail($('#emailNew').val()) == false) {
+                                document.getElementById('errdivAccount').innerHTML = '<p id="perrDk" >Email không hợp lệ</p>'
+                            }
+                            else {
+                                $.ajax({
+                                    url: '/send-verify-email',
+                                    type: 'POST',
+                                    data: {
+                                        email: $('#emailNew').val(),
+                                        emailOld: $('#emailFree').val()
+                                    },
+                                    success: function (data) {
+                                        const Toast = Swal.mixin({
+                                            toast: true,
+                                            position: 'top-end',
+                                            showConfirmButton: false,
+                                            timer: 3000
+                                        })
+                                        if (data == 'Đã gửi về email mới') {
+                                            Toast.fire(
+                                                data,
+                                                "",
+                                                'success'
+                                            )
+                                            document.getElementById('buttonEmailNew').style.display = 'none'
+                                            document.getElementById('changeF').style.display = 'block'
+                                        } else {
+                                            Toast.fire(
+                                                data,
+                                                "",
+                                                'warning'
+                                            )
+                                        }
+                                    }
+                                })
+                            }
+
+
+                        }
+                        function changeEmail() {
+                            $.ajax({
+                                url: '/change-email',
+                                type: 'POST',
+                                data: {
+                                    email: $('#emailFree').val(),
+                                    emailNew: $('#emailNew').val(),
+                                    otp: $('#mxnInputN').val()
+                                },
+                                success: function (data) {
+                                    const Toast = Swal.mixin({
+                                        toast: true,
+                                        position: 'top-end',
+                                        showConfirmButton: false,
+                                        timer: 3000
+                                    })
+                                    if (data == 'Thành công') {
+                                        Toast.fire(
+                                                data,
+                                                "",
+                                                'success'
+                                            )
+                                        setTimeout(
+                                            () => {
+                                                location.reload()
+                                            },
+                                            1 * 1500
+                                        );
+                                    }
+                                    else {
+                                        Toast.fire(
+                                                data,
+                                                "",
+                                                'warning'
+                                            )
+                                    }
+                                }
+
+                            })
+                        }
+                        function checkOtp() {
+
+                            if ($('#mxnInput').val() == "") {
+                                document.getElementById("xnEmailInput").disabled = true;
+                            } else {
+                                document.getElementById("xnEmailInput").disabled = false;
+                            }
+                        }
+                        function XnEmail() {
+                            $.ajax({
+                                url: '/change-email',
+                                type: 'POST',
+                                data: {
+                                    email: $('#emailFree').val(),
+                                    otp: $('#mxnInput').val()
+                                },
+                                success: function (data) {
+                                    const Toast = Swal.mixin({
+                                        toast: true,
+                                        position: 'top-end',
+                                        showConfirmButton: false,
+                                        timer: 3000
+                                    })
+                                    if (data == 'otp chính xác!') {
+                                        Toast.fire(
+                                                data,
+                                                "",
+                                                'success'
+                                            )
+                                        document.getElementById('changeA').style.display = 'none'
+                                        document.getElementById('changeB').style.display = 'block'
+                                    }
+                                    else {
+                                        Toast.fire(
+                                                data,
+                                                "",
+                                                'warning'
+                                            )
+                                    }
+                                }
+                            })
+                        }
+                        function sendMxn() {
+                            document.getElementById('mxn').style.display = 'block'
+                            $.ajax({
+                                url: '/send-verify-email',
+                                type: 'POST',
+                                data: {
+                                    emailOld: $('#emailFree').val(),
+                                },
+                                success: function (data) {
+                                    if (data == 'Đã gửi về email cũ') {
+                                        const Toast = Swal.mixin({
+                                            toast: true,
+                                            position: 'top-end',
+                                            showConfirmButton: false,
+                                            timer: 3000
+                                        })
+                                        Toast.fire(
+                                                'Đã Gửi OTP vào Email Hiện Tại',
+                                                "",
+                                                'success'
+                                            )
+                                    }
+                                }
+
+                            })
+
+                        }
+                        function avatarCheckIn() {
+                            document.getElementById('mayAnh').style.display = 'block'
+                        }
+                        function avatarCheckOut() {
+                            document.getElementById('mayAnh').style.display = 'none'
+                        }
+                        function check() {
+                            var a = document.getElementById('newPass')
+                            var b = document.getElementById('newPassA')
+                            var a1 = document.getElementById('z-passwordCr')
+                            var b1 = document.getElementById('z-passwordCrA')
+                            var temp=false
+                            var temp1=false
+                            if (a.value.length < 6)
+                            {
+                                document.getElementById('changePass').disabled=true
+                                temp=false
+                                a1.innerHTML = '<img  style="height: 15px;width: 15px;margin:16px 0 0 15px" src="client/images/tich-do.png" alt="" title="Password phải có ít nhất 6 kí tự">'
+                            }
+                            else
+                            {
+                                temp=true
+                                a1.innerHTML = '<img  style="height: 15px;width: 15px;margin:16px 0 0 15px" src="client/images/tich-xanh.png" alt="" title="ok">'
+                            }
+                            if (b.value != "") {
+                                if (a.value == b.value)
+                                {
+                                    temp1=true
+                                    b1.innerHTML = '<img  style="height: 15px;width: 15px;margin:16px 0 0 15px" src="client/images/tich-xanh.png" alt="" title="ok">'
+                                }
+                                else
+                                {
+                                    temp1=false
+                                    document.getElementById('changePass').disabled=true
+                                    b1.innerHTML = '<img  style="height: 15px;width: 15px;margin:16px 0 0 15px" src="client/images/tich-do.png" alt="" title="Mật khẩu không trùng khớp">'
+                                }
+                            }
+                            if(temp==true&&temp1==true)
+                            {
+                                document.getElementById('changePass').disabled=false
+                            }
+                        }
+                        function changePassClick() {
+                            if ($('#newPass').val() == $('#newPassA').val()) {
+                                $.ajax({
+                                    url: '/account/changePassword',
+                                    type: 'PUT',
+                                    data: {
+                                        email: $('#emailFree').val(),
+                                        password: $('#newPass').val(),
+                                        nowPassword: $('#nowPass').val()
+                                    },
+                                    success: function (data) {
+                                        if (data.message == 'Thành công') {
+                                            const Toast = Swal.mixin({
+                                            toast: true,
+                                            position: 'top-end',
+                                            showConfirmButton: false,
+                                            timer: 3000
+                                        })
+                                        Toast.fire(
+                                                'Đổi mật khẩu thành công!',
+                                                "",
+                                                'success'
+                                            )
+                                        setTimeout(
+                                            () => {
+                                                location.reload()
+                                            },
+                                            1 * 1000
+                                        );
+                                        }
+                                        else if (data.message == 'Mật khẩu sai!')
+                                        {
+                                            const Toast = Swal.mixin({
+                                            toast: true,
+                                            position: 'top-end',
+                                            showConfirmButton: false,
+                                            timer: 3000
+                                        })
+                                        Toast.fire(
+                                                data.message,
+                                                "",
+                                                'warning'
+                                            )
+                                            document.getElementById('err').innerHTML = '<p style="margin-left:20px">Mật khẩu sai!</p>'
+                                        }
+                                        else if (data.message == 'Thất bại')
+                                            document.getElementById('err').innerHTML = '<p>Thất bại</p>'
+                                    }
+                                })
+                            }
+                            else
+                                document.getElementById('err').innerHTML = '<p>Mật khẩu không khớp</p>'
+
+                        }
+                        const fileUpload = document.querySelector("#file-input");
+                        fileUpload.addEventListener("change", (event) => {
+                            $('#formAvatar').submit()
+                            setTimeout(
+                                () => {
+                                    location.reload()
+                                },
+                                1 * 1000
+                            );
+                        })
+
+                        function changeInfo(password) {
+                            $.ajax({
+                                url: '/account/editProfile',
+                                type: 'PUT',
+                                data: {
+                                    name: $('#tenInfo').val(),
+                                    date: $('#dateInfo').val(),
+                                    phoneNumber: $('#phoneNumberInfo').val(),
+                                    address: $('#addressInfo').val(),
+                                    sex: $('#sexInfo').val(),
+                                    password: $('#passwordInfo').val()
+                                },
+                                success: function (data) {
+                                    if (data.message == 'Thành Công')
+                                    {
+                                        const Toast = Swal.mixin({
+                                            toast: true,
+                                            position: 'top-end',
+                                            showConfirmButton: false,
+                                            timer: 3000
+                                        })
+                                        Toast.fire(
+                                                'Thay đổi Thông tin Thành Công!',
+                                                "",
+                                                'success'
+                                            )
+                                        setTimeout(
+                                            () => {
+                                                location.reload()
+                                            },
+                                            1 * 1000
+                                        );
+                                    }
+                                    else if (data.message == 'Thất Bại')
+                                        document.getElementById('errmk').innerHTML = '<p style="margin-left:20px">Thất bại</p>'
+                                    else if (data.message == 'Mật khẩu sai!')
+                                    {
+                                        const Toast = Swal.mixin({
+                                            toast: true,
+                                            position: 'top-end',
+                                            showConfirmButton: false,
+                                            timer: 3000
+                                        })
+                                        Toast.fire(
+                                                data.message,
+                                                "",
+                                                'warning'
+                                            )
+                                        document.getElementById('errmk').innerHTML = '<p style="margin-left:161px">Mật khẩu sai!</p>'
+                                    }
+                                    else
+                                    {
+                                        const Toast = Swal.mixin({
+                                            toast: true,
+                                            position: 'top-end',
+                                            showConfirmButton: false,
+                                            timer: 3000
+                                        })
+                                        Toast.fire(
+                                                data.message,
+                                                "",
+                                                'warning'
+                                            )
+                                    }
+                                }
+                            })
+                        }
+                        $('.topsearch').on('click', '#topsearch-btn', function () {
+                            if ($('body').hasClass('search-show')) {
+                                $('body').removeClass('search-show');
+                            } else {
+                                $('body').addClass('search-show');
+                            }
+                            return false;
+                        });
+
+                        // Search Close
+                        $('body.search-show').on('click', '#topsearch-btn', function () {
+                            if ($('body').hasClass('search-show')) {
+                                $('body').removeClass('search-show');
+                            }
+                            return false;
+                        });
+                        $('html').on('click', 'body.search-show', function () {
+                            $('body').removeClass('search-show');
+                        });
+                        $('body').on('click', '.topsearch', function (event) {
+                            event.stopPropagation();
+                        });
+                        function runScriptChangeInfo(e) {
+                            //See notes about 'which' and 'key'
+                            if (e.keyCode == 13) {
+                                changeInfo()
+                            }
+                        }
+                        function runScriptChangePass(e) {
+                            //See notes about 'which' and 'key'
+                            if (e.keyCode == 13) {
+                                changePassClick()
+                            }
+                        }
+                        function runScriptChangeOldOtp(e) {
+                            //See notes about 'which' and 'key'
+                            if (e.keyCode == 13) {
+                                XnEmail()
+                            }
+                        }
+                        function runScriptNewEmail(e) {
+                            //See notes about 'which' and 'key'
+                            if (e.keyCode == 13) {
+                                sendOtp()
+                            }
+                        }
+                        function runScriptNewEmailOtp(e) {
+                            //See notes about 'which' and 'key'
+                            if (e.keyCode == 13) {
+                                changeEmail()
+                            }
+                        }
+                    </script>
+                    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+                    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+                    <script src="client/javascripts/jquery-1.11.2.min.js"></script>
+                    <script src="client/javascripts/jquery.bxslider.min.js"></script>
+                    <script src="client/javascripts/fancybox/fancybox.js"></script>
+                    <script src="client/javascripts/fancybox/helpers/jquery.fancybox-thumbs.js"></script>
+                    <script src="client/javascripts/jquery.flexslider-min.js"></script>
+                    <script src="client/javascripts/swiper.jquery.min.js"></script>
+                    <script src="client/javascripts/jquery.waypoints.min.js"></script>
+                    <script src="client/javascripts/progressbar.min.js"></script>
+                    <script src="client/javascripts/ion.rangeSlider.min.js"></script>
+                    <script src="client/javascripts/chosen.jquery.min.js"></script>
+                    <script src="client/javascripts/jQuery.Brazzers-Carousel.js"></script>
+                    <script src="client/javascripts/plugins.js"></script>
+                    <script src="client/javascripts/main.js"></script>

@@ -1,0 +1,198 @@
+<% try{ %>
+    <%- layout('client/_layout/index', user.name) %>
+        <% }catch(error){ %>
+            <%- layout('client/_layout/index') %>
+                <% } %>
+
+                <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+<!-- Main Content - start -->
+<main>
+    <section class="container stylization maincont">
+
+
+        <ul class="b-crumbs">
+            <li>
+                <a href="home">
+                    Trang chủ
+                </a>
+            </li>
+            <li>
+                <span>So sánh</span>
+            </li>
+        </ul>
+        <h1 class="main-ttl"><span>So sánh</span></h1>
+        <div class="wccm-compare-table">
+            <div class="wccm-thead">
+                <div class="wccm-tr">
+                    <div class="wccm-th"></div>
+                    <div class="wccm-table-wrapper">
+                        <table class="wccm-table">
+                            <tbody>
+                            <tr>
+                                <% var i = 0 %> 
+                                <% compare.forEach(function (compare){ %>
+                                <td id="img<%= i %>" class="wccm-td">
+                                    <div class="wccm-thumb">
+                                        <i id="delete<%= i %>" class="fa fa-remove"></i>
+                                        <img style="cursor: pointer;" onclick="img(`<%= compare.id_product %>`)" src="<%= compare.productImage[0] %>" alt="<%= compare.productName %>">
+                                    </div>
+                                    <div>
+                                        <a href="product?id=<%= compare.id_product %>"><%= compare.productName %></a>
+                                    </div>
+                                </td>
+                                <% i++ }) %> 
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="wccm-tbody">
+                <div class="wccm-tr">
+                    <div class="wccm-th">Giới Tính</div>
+                    <div class="wccm-table-wrapper">
+                        <table class="wccm-table" cellspacing="0" cellpadding="0" border="0">
+                            <tbody>
+                            <tr><% var sex=0 %> 
+                                <% compare.forEach(function (compare){ %>
+                                    <% if(compare.productCategory=='women'){ %> 
+                                <td id="sex<%= sex %>" class="wccm-td">
+                                    <p>Nữ</p>
+                                </td>
+                                <% }else{ %> 
+                                    <td id="sex<%= sex %>" class="wccm-td">
+                                        <p>Nam</p>
+                                    </td>
+                                    <% }sex++}) %> 
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="wccm-tr">
+                    <div class="wccm-th">Chất Liệu</div>
+                    <div class="wccm-table-wrapper">
+                        <table class="wccm-table" cellspacing="0" cellpadding="0" border="0">
+                            <tbody>
+                            <tr>
+                                <% var material=0 %> 
+                                <% compare.forEach(function (compare){ %>
+                                <td id="material<%= material %>" class="wccm-td">
+                                    <p><%= compare.productMaterial %></p>
+                                </td>
+                                <% material++ }) %>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="wccm-tr">
+                    <div class="wccm-th">Lượt mua</div>
+                    <div class="wccm-table-wrapper">
+                        <table class="wccm-table" cellspacing="0" cellpadding="0" border="0">
+                            <tbody>
+                            <tr>
+                                <% var purchases=0 %> 
+                                <% compare.forEach(function (compare){ %>
+                                    <td id="purchases<%= purchases %>" class="wccm-td">
+                                        <p><%= compare.productPurchases %></p>
+                                    </td>
+                                <% purchases++}) %>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="wccm-tr">
+                    <div class="wccm-th">Phong Cách</div>
+                    <div class="wccm-table-wrapper">
+                        <table class="wccm-table" cellspacing="0" cellpadding="0" border="0">
+                            <tbody>
+                            <tr>
+                                <% var tags=0 %> 
+                                <% compare.forEach(function (compare){ %>
+                                    <td id="tags<%= tags %>" class="wccm-td">
+                                        <p><%= compare.productTags %></p>
+                                    </td>
+                                    <% tags++ }) %>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="wccm-tr">
+                    <div class="wccm-th">Sản xuất</div>
+                    <div class="wccm-table-wrapper">
+                        <table class="wccm-table" cellspacing="0" cellpadding="0" border="0">
+                            <tbody>
+                            <tr>
+                                <% var origin=0 %> 
+                                <% compare.forEach(function (compare){ %>
+                                    <td id="origin<%= origin %>"  class="wccm-td">
+                                        <p><%= compare.productOrigin %></p>
+                                    </td>
+                                <% origin++ }) %>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="wccm-tr">
+                    <div class="wccm-th" style="font-size: 20px;font-weight:bolder;">Giá</div>
+                    <div class="wccm-table-wrapper">
+                        <table class="wccm-table" cellspacing="0" cellpadding="0" border="0">
+                            <tbody>
+                            <tr>
+                                <% var price=0 %> 
+                                <% compare.forEach(function (compare){ %>
+                                    <td id="price<%= price %>" class="wccm-td">
+                                        <p style="font-size: 20px;font-weight:bolder;"><%= compare.productPrice %>₫</p>
+                                    </td>
+                                <% price++}) %>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+</main>
+<!-- Main Content - end -->
+<script>
+    function img(id){
+        location.replace("./product?id="+id)
+    }
+    "<% var temp=0 %>"
+        "<% for (let index = 0; index < i ; index++) { %>"
+        $( "#delete<%= index %>").click(function() {
+        `<% 
+        try{
+        var temp1= compare[index].id_product
+        }
+        catch (error) {
+        var temp1 = '' 
+        }
+        %>`
+                                
+        document.getElementById('img<%= index %>').remove()
+        document.getElementById('sex<%= index %>').remove()
+        document.getElementById('material<%= index %>').remove()
+        document.getElementById('purchases<%= index %>').remove()
+        document.getElementById('tags<%= index %>').remove()
+        document.getElementById('origin<%= index %>').remove()
+        document.getElementById('price<%= index %>').remove()
+        $.ajax({
+            url: '/removeCompare?id=<%= temp1 %>',
+            type: 'DELETE',
+            data: {
+            },
+        })
+        var str = document.getElementById('compareHeader').innerText
+											str = parseInt(str) -1
+											document.getElementById('compareHeader').innerText = str
+    });
+    "<% temp=temp+1 } %>"
+</script>
+

@@ -1,0 +1,202 @@
+<% include partials/main %>
+
+    <head>
+        
+        <% include partials/title-meta %>
+        
+        <!-- Responsive Table css -->
+        <link href="/assets/libs/admin-resources/rwd-table/rwd-table.min.css" rel="stylesheet" type="text/css" />
+
+        <% include partials/head-css %>
+
+    </head>
+
+    <% include partials/body %>
+
+        <!-- Begin page -->
+        <div id="layout-wrapper">
+
+            <% include partials/menu %>
+
+            <!-- ============================================================== -->
+            <!-- Start right Content here -->
+            <!-- ============================================================== -->
+            <div class="main-content">
+
+                <div class="page-content">
+                    <div class="container-fluid">
+
+                        <% include partials/page-title %>
+
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-body">
+        
+                                        <h4 class="card-title">Người dùng</h4>
+                                        <div class="table-rep-plugin">
+                                            <div class="mb-0" data-pattern="priority-columns">
+                                                <table id="tech-companies-1" class="table table-striped">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>Tên</th>
+                                                        <th data-priority="1">Email</th>
+                                                        <th data-priority="3">Ngày sinh</th>
+                                                        <th data-priority="1">Địa chỉ</th>
+                                                        <th data-priority="3">Số điện thoại</th>
+                                                        <th data-priority="3">Giới tính</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <% users.forEach((user) => { %>
+                                                        <tr id="<%= user._id %>">
+                                                            <td><%= user.name %></td>
+                                                            <td><%= user.email %></td>
+                                                            <td><%= user.date %></td>
+                                                            <td><%= user.address %></td>
+                                                            <td><%= user.phoneNumber %></td>
+                                                            <td><%= user.sex %></td>
+                                                            <td><input onclick="changePass(`<%= user._id %>`)" class="btn btn-outline-primary waves-effect waves-light" type="button" value="Đặt lại mật khẩu"></td>
+                                                            <td><input onclick="deleteUser(`<%= user._id %>`)" class="btn btn-outline-danger waves-effect waves-light" type="button" value="Xóa"></td>
+                                                        </tr>
+                                                        <% }) %>
+                                                </table>
+                                            </div>
+        
+                                        </div>
+        
+                                    </div>
+                                </div>
+                            </div> <!-- end col -->
+                        </div> <!-- end row -->
+                    </div> <!-- container-fluid -->
+                </div>
+                <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+                <!-- End Page-content -->
+                <script>
+                    function changePass(id)
+                    {
+                        (async () => {
+                        const { value: formValues } = await Swal.fire({
+                        title: 'Đổi mật khẩu!',
+                        html:
+                            '<input placeholder="Mật khẩu mới" id="swal-input1" type="password" class="swal2-input">' +
+                            '<input placeholder="Nhập lại Mật khẩu mới" id="swal-input2" type="password" class="swal2-input">',
+                        focusConfirm: false,
+                        preConfirm: () => {
+                            return [
+                            document.getElementById('swal-input1').value,
+                            document.getElementById('swal-input2').value
+                            ]
+                        }
+                        })
+                        if (formValues) {
+                            var a=document.getElementById('swal-input1').value
+                            var b=document.getElementById('swal-input2').value
+                            if(a==b&&a!=''&&b!='')
+                            {
+                                $.ajax({
+                                    url:'/admin/changePassword',
+                                    type:'PUT',
+                                    data: {
+                                        id:id,
+                                        password:document.getElementById('swal-input1').value
+                                    },
+                                    success:function(data){
+                                        if(data=='Thành công')
+                                            {
+                                                const Toast = Swal.mixin({
+                                                toast: true,
+                                                position: 'top-end',
+                                                showConfirmButton: false,
+                                                timer: 3000
+                                            })
+                                            Toast.fire({
+                                                icon: "success",
+                                                title: 'Thay đổi thành công'
+                                            })
+                                        }
+                                    }
+                                })
+                            }
+                            else
+                            {
+                                {
+                                Swal.fire(
+                                    '',
+                                    'Mật khẩu không khớp.',
+                                    'warning',
+                                    'warning'
+                                )
+                                }
+                            }
+                        }
+                        })()
+                    }
+                    
+                    function deleteUser(id)
+                    {
+                        const swalWithBootstrapButtons = Swal.mixin({
+                        customClass: {
+                            confirmButton: 'btn btn-success',
+                            cancelButton: 'btn btn-danger'
+                        },
+                        buttonsStyling: false
+                        })
+
+                        swalWithBootstrapButtons.fire({
+                        title: 'Bạn có chắc chắn không',
+                        text: "Hãy suy nghĩ thật kĩ trước khi xóa nó",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonText: 'Đồng ý',
+                        cancelButtonText: 'Hủy bỏ',
+                        reverseButtons: true
+                        }).then((result) => {
+                        if (result.isConfirmed) {
+                            $.ajax({
+                                    url:'/admin/deleteUser',
+                                    type:'DELETE',
+                                    data: {
+                                        id:id
+                                    },
+                                    success:function(data){
+                                        if(data=='Thành công')
+                                        {
+                                            swalWithBootstrapButtons.fire(
+                                            'Xóa!',
+                                            'Tài khoản đã được xóa.',
+                                            'success'
+                                            )
+                                            document.getElementById(id).remove()
+                                        }
+                                    }
+                                })
+                        } else 
+                         {
+                            
+                        }
+                        })
+                    }
+                </script>
+                <% include partials/footer %>
+                
+            </div>
+            <!-- end main content-->
+
+        </div>
+        <!-- END layout-wrapper -->
+
+        <% include partials/right-sidebar %>
+
+        <% include partials/vendor-scripts %>
+
+         <!-- Responsive Table js -->
+         <script src="/assets/libs/admin-resources/rwd-table/rwd-table.min.js"></script>
+
+        <!-- Init js -->
+        <script src="/assets/js/pages/table-responsive.init.js"></script>
+
+        <script src="/assets/js/app.js"></script>
+
+    </body>
+</html>

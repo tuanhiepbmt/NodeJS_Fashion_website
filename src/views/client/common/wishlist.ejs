@@ -1,0 +1,155 @@
+
+<% try{ %>
+	<%- layout('client/_layout/index', user.name) %>
+		<% }catch(error){ %>
+			<%- layout('client/_layout/index') %>
+				<% } %>
+                <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+<!-- Main Content - start -->
+<main>
+    <section class="container">
+
+
+        <ul class="b-crumbs">
+            <li>
+                <a href="home">
+                    Trang chủ
+                </a>
+            </li>
+            <li>
+                <span>Danh sách yêu thích</span>
+            </li>
+        </ul>
+        <h1 class="main-ttl"><span>Danh sách yêu thích</span></h1>
+        <!-- Catalog Items | Full - start -->
+        <div class="section-cont section-full" style="min-height: 400px;">
+            <div class="prod-items section-items">
+                <% wishlist.forEach(function (wishlist){ %>
+                <div id="item<%= wishlist.id_product %>" class="prod-i">
+                    <div class="prod-i-top">
+                        <a href="product?id=<%= wishlist.id_product %>" class="prod-i-img"><!-- NO SPACE --><img src="<%= wishlist.productImage[0] %>" alt="<%= wishlist.productName %>"><!-- NO SPACE --></a>
+                        <p class="prod-i-info">
+                            <a style="cursor: pointer;" class="prod-i-favorites" onclick="deleteClick(`<%= wishlist.id_product %>`)" ><span>Xóa</span><i class="fa fa-remove"></i></a>
+                            <a class="prod-i-qview" href="product?id=<%= wishlist.id_product %>"><span>xem</span><i class="fa fa-search"></i></a>
+                            <a style="cursor: pointer;" class="prod-i-compare" onclick="compareClick(`<%= wishlist.id_product %>`)"><span>So sánh</span><i class="fa fa-bar-chart"></i></a>
+                        </p>
+                        <a style="cursor: pointer;" onclick="cartClick(`<%= wishlist.id_product %>`)" class="prod-i-buy">Giỏ hàng</a>
+
+                        
+                    </div>
+                    <h3>
+                        <a href="product?id=<%= wishlist.id_product %>"><%= wishlist.productName %></a>
+                    </h3>
+                    <p class="prod-i-price">
+                        <b style="font-size: 25px;"><%= wishlist.productPrice %>₫</b>
+                    </p>
+                </div>
+                <% }) %> 
+
+            </div>
+
+        </div>
+    </section>
+</main>
+<!-- Main Content - end -->
+<script>
+    function deleteClick(id) {
+            
+        $.ajax({
+            url: '/removeWishlist?id=' + id,
+            type: 'DELETE',
+            data: {
+            },
+            success:function(data){
+                if(data=='Thành công')
+                {
+                    document.getElementById('item' + id).remove()
+                    var str = document.getElementById('wishlistHeader').innerText
+                    str = parseInt(str) - 1
+                    document.getElementById('wishlistHeader').innerText = str
+                }
+                else alert('ngu')
+            }
+        })
+    }
+    function compareClick(id) {
+        var url = '/addCompare?id=' + id
+        $.ajax({
+            url: url,
+            type: 'PUT',
+            data: {
+            },
+            success: function (data) {
+                if (data == 'Vui lòng đăng nhập') {
+                    location.replace('./login')
+                }
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 3000
+                })
+                if (data == 'Sản phẩm tồn tại') {
+                    Toast.fire({
+                        type: "warning",
+                        title: 'Đã xóa khỏi So sánh'
+                    })
+                    $.ajax({
+                        url: '/removeCompare?id=' + id,
+                        type: 'DELETE',
+                        data: {
+                        }
+                    })
+                    var str = document.getElementById('compareHeader').innerText
+                    str = parseInt(str) - 1
+                    document.getElementById('compareHeader').innerText = str
+                } else if (data == 'So sánh đầy') {
+                    Toast.fire({
+                        type: "warning",
+                        title: 'So sánh đầy'
+                    })
+                } else if (data == 'Đã thêm') {
+                    Toast.fire({
+                        type: "success",
+                        title: 'Đã Thêm vào So sánh'
+                    })
+                    var str = document.getElementById('compareHeader').innerText
+                    str = parseInt(str) + 1
+                    document.getElementById('compareHeader').innerText = str
+                }
+            }
+        })
+    }
+    function cartClick(id) {
+        var url = '/addCart?id=' + id + '&quantity=1&size=S'
+        $.ajax({
+            url: url,
+            type: 'PUT',
+            data: {
+            },
+            success: function (data) {
+                if (data == 'Vui lòng đăng nhập') {
+                    location.replace('./login')
+                }
+                else {
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 3000
+                    })
+                    Toast.fire({
+                        type: "success",
+                        title: 'Đã Thêm vào Giỏ Hàng ♥'
+                    })
+                    if (data != 'Sản phẩm tồn tại') {
+                        var str = document.getElementById('cartHeader').innerText
+                        str = parseInt(str) + 1
+                        document.getElementById('cartHeader').innerText = str
+                    }
+                }
+            }
+        })
+    }
+</script>
+

@@ -1,0 +1,580 @@
+<% try{ %>
+    <%- layout('client/_layout/index', user.name) %>
+<% }catch(error){ %>
+    <%- layout('client/_layout/index') %>
+<% } %>  
+<!-- Main Content - start -->
+<main>
+  <section class="container">
+      <!-- Slider -->
+      <div class="fr-slider-wrap">
+          <div class="fr-slider">
+              <ul class="slides">
+                  <li>
+                    <div style="width: 1140px;
+                      height: 400px;
+                      background-image: linear-gradient(5deg,rgba(133, 133, 136, 0.25),rgb(255, 255, 255,0.0000001)),
+                      url(client/images/copy_21860360.png);"></div>
+                    <div class="fr-slider-cont">
+                      <div class="fr-slider-cont" style="left: 0%;">
+                          <h3>SẢN PHẨM MỚI</h3>
+                          <p>Thương xuyên ra mắt những sản phẩm mới mang lại trải nghiệm mới mẻ<br>Đảm bảo giá cả hợp lí và chất lượng tốt nhất cho khách hàng</p>
+                          <p class="fr-slider-more-wrap">
+                              <a class="fr-slider-more" href="women-dress">Mua Sắm Ngay</a>
+                          </p>
+                      </div>
+                  </li>
+                  <li>
+                    <div style="width: 1140px;
+                      height: 400px;
+                      background-image: linear-gradient(5deg,rgba(133, 133, 136, 0.25),rgb(255, 255, 255,0.0000001)),
+                      url(client/images/copy_21860360.png);"></div>
+                    <div class="fr-slider-cont">
+                      <div class="fr-slider-cont" style="left: 0%;">
+                          <h3>DẪN ĐẦU XU HƯỚNG</h3>
+                          <p>Chúng tôi cam kết cập nhập những mẫu thời trang hot nhất trong nước và thế giới.<br>Phù hợp với mọi lứa tuổi, văn hóa và phong tục của Việt Nam</p>
+                          <p class="fr-slider-more-wrap">
+                              <a class="fr-slider-more" href="women-dress">Mua Sắm Ngay</a>
+                          </p>
+                      </div>
+                  </li>
+              </ul>
+          </div>
+      </div>
+      <div class="fr-pop-wrap">
+        <h3 class="component-ttl" ><span>Có thể bạn sẽ thích</span></h3>
+        
+        </div>
+      <div class="fr-pop-tab-cont">
+        <div class="flexslider prod-items fr-pop-tab">
+            <ul class="slides">
+                <% try { %> 
+                    <% var view = user.view %> 
+                    <% var viewSort=view.sort(function(a, b){return b.count-a.count}) %>
+                    <% viewSort.forEach(product => { %>
+                      <li class="prod-i">
+                          <div class="prod-i-top">
+                              <a href="product?id=<%= product.id_product %>" class="prod-i-img"><!-- NO SPACE --><img src="<%= product.productImage %>" alt="<%= product.productName %>"></a>
+                              <p class="prod-i-info">
+                                  <a onclick="love(`<%= product.id_product %>`)" style="cursor: pointer;" class="prod-i-favorites"><span>Yêu Thích</span><i class="fa fa-heart"></i></a>
+                                  <a href="product?id=<%= product.id_product %>" style="cursor: pointer;" class="qview-btn prod-i-qview"><span>Xem</span><i class="fa fa-search"></i></a>
+                                  <a class="prod-i-compare" style="cursor: pointer;" onclick="compare(`<%= product.id_product %>`)"><span>So Sánh</span><i class="fa fa-bar-chart"></i></a>
+                              </p>
+                              <p class="prod-i-addwrap">
+                                  <a href="product?id=<%= product.id_product %>" style="cursor: pointer;" class="prod-i-add">Xem chi thiết</a>
+                              </p>
+                          </div>
+                          <h3>
+                              <a href="product?id=<%= product.id_product %>"><%= product.productName %></a>
+                          </h3>
+                          <p class="prod-i-price">
+                          <b><%= product.productPrice %>₫</b>
+                      </p>
+                      </li>
+                  <%  }) %> 
+                 <% if(user.view==''){ %> 
+                    <% var allProduct = products %> 
+                        <% var all=allProduct.sort(function(a, b){return b.productPurchases-a.productPurchases}) %>
+                        <% all.forEach(function (products){ %> 
+                       
+                      <li class="prod-i">
+                          <div class="prod-i-top">
+                              <a href="product?id=<%= products._id %>" class="prod-i-img"><!-- NO SPACE --><img src="<%= products.productImage[0] %>" alt="<%= products.productName %>"><!-- NO SPACE --></a>
+                              <p class="prod-i-info">
+                                  <a style="cursor: pointer;" onclick="love(`<%= products._id %>`)" class="prod-i-favorites"><span>Yêu Thích</span><i class="fa fa-heart"></i></a>
+                                  <a style="cursor: pointer;" href="product?id=<%= products._id %>" class="prod-i-qview"><span>Xem</span><i class="fa fa-search"></i></a>
+                                  <a style="cursor: pointer;" onclick="compare(`<%= products._id %>`)" class="prod-i-compare"><span>So Sánh</span><i class="fa fa-bar-chart"></i></a>
+                              </p>
+                              <p class="prod-i-addwrap">
+                                  <a href="product?id=<%= products._id %>" class="prod-i-add">Xem chi thiết</a>
+                              </p>
+                          </div>
+                          <h3>
+                              <a href="product?id=<%= products._id %>"><%= products.productName %></a>
+                          </h3>
+                          <p class="prod-i-price">
+                              <b><%= products.productPrice %>₫</b>
+                          </p>
+                      </li>
+                    <% })} %>
+              
+           <%  }catch{ %>
+            <% var allProduct = products %> 
+            <% var all=allProduct.sort(function(a, b){return b.productPurchases-a.productPurchases}) %>
+            <% all.forEach(function (products){ %> 
+           
+          <li class="prod-i">
+              <div class="prod-i-top">
+                  <a href="product?id=<%= products._id %>" class="prod-i-img"><!-- NO SPACE --><img src="<%= products.productImage[0] %>" alt="<%= products.productName %>"><!-- NO SPACE --></a>
+                  <p class="prod-i-info">
+                      <a style="cursor: pointer;" onclick="love(`<%= products._id %>`)" class="prod-i-favorites"><span>Yêu Thích</span><i class="fa fa-heart"></i></a>
+                      <a style="cursor: pointer;" href="product?id=<%= products._id %>" class="prod-i-qview"><span>Xem</span><i class="fa fa-search"></i></a>
+                      <a style="cursor: pointer;" onclick="compare(`<%= products._id %>`)" class="prod-i-compare"><span>So Sánh</span><i class="fa fa-bar-chart"></i></a>
+                  </p>
+                  <p class="prod-i-addwrap">
+                      <a href="product?id=<%= products._id %>" class="prod-i-add">Xem chi thiết</a>
+                  </p>
+              </div>
+              <h3>
+                  <a href="product?id=<%= products._id %>"><%= products.productName %></a>
+              </h3>
+              <p class="prod-i-price">
+                  <b><%= products.productPrice %>₫</b>
+              </p>
+              <div class="prod-i-skuwrapcolor">
+                <b>Lượt mua: <%= products.productPurchases %></b>₫
+              </div>
+          </li>
+        <% })} %>
+            </ul>
+        </div>
+    </div><!-- .fr-pop-tab-cont -->
+      <!-- Popular Products -->
+      <div class="fr-pop-wrap">
+          <h3 class="component-ttl" ><span>SẢN PHẨM PHỔ BIẾN</span></h3>
+          <ul class="fr-pop-tabs sections-show">
+              <li><a data-frpoptab-num="1" data-frpoptab="#frpoptab-tab-1" href="#" class="active">Tất cả</a></li>
+              <li><a data-frpoptab-num="2" data-frpoptab="#frpoptab-tab-2" href="#">Phụ nữ</a></li>
+              <li><a data-frpoptab-num="3" data-frpoptab="#frpoptab-tab-3" href="#">Đàn ông</a></li>
+              <li><a data-frpoptab-num="4" data-frpoptab="#frpoptab-tab-4" href="#">Đầm và Váy</a></li>
+              <li><a data-frpoptab-num="5" data-frpoptab="#frpoptab-tab-5" href="#">Áo</a></li>
+              <li><a data-frpoptab-num="6" data-frpoptab="#frpoptab-tab-6" href="#">Quần</a></li>
+              <li><a data-frpoptab-num="7" data-frpoptab="#frpoptab-tab-7" href="#">Mũ</a></li>
+          </ul>
+
+          <div class="fr-pop-tab-cont">
+              <p data-frpoptab-num="1" class="fr-pop-tab-mob active" data-frpoptab="#frpoptab-tab-1">Tất cả</p>
+              <div class="flexslider prod-items fr-pop-tab" id="frpoptab-tab-1">
+                  <ul class="slides">
+                        <% var allProduct = products %> 
+                        <% var all=allProduct.sort(function(a, b){return b.productPurchases-a.productPurchases}) %>
+                        <% all.forEach(function (products){ %> 
+                       
+                      <li class="prod-i">
+                          <div class="prod-i-top">
+                              <a href="product?id=<%= products._id %>" class="prod-i-img"><!-- NO SPACE --><img src="<%= products.productImage[0] %>" alt="<%= products.productName %>"><!-- NO SPACE --></a>
+                              <p class="prod-i-info">
+                                  <a style="cursor: pointer;" onclick="love(`<%= products._id %>`)" class="prod-i-favorites"><span>Yêu Thích</span><i class="fa fa-heart"></i></a>
+                                  <a href="product?id=<%= products._id %>" class="prod-i-qview"><span>Xem</span><i class="fa fa-search"></i></a>
+                                  <a style="cursor: pointer;" onclick="compare(`<%= products._id %>`)" class="prod-i-compare"><span>So Sánh</span><i class="fa fa-bar-chart"></i></a>
+                              </p>
+                              <p class="prod-i-addwrap">
+                                  <a href="product?id=<%= products._id %>" class="prod-i-add">Xem chi thiết</a>
+                              </p>
+                          </div>
+                          <h3>
+                              <a href="product?id=<%= products._id %>"><%= products.productName %></a>
+                          </h3>
+                          <p class="prod-i-price">
+                              <b><%= products.productPrice %>₫</b>
+                          </p>
+                          <div class="prod-i-skuwrapcolor">
+                            <b>Lượt mua: <%= products.productPurchases %></b>₫
+                          </div>
+                      </li>
+                    <% }) %>
+                  </ul>
+              </div>
+
+              <p data-frpoptab-num="2" class="fr-pop-tab-mob" data-frpoptab="#frpoptab-tab-2">Phụ nữ</p>
+              <div class="flexslider prod-items fr-pop-tab" id="frpoptab-tab-2">
+                <ul class="slides">
+                    <% var womenProduct = products %> 
+                    <% var women=womenProduct.filter(element=>element.productCategory=='women') %>
+                    <% women=women.sort(function(a, b){return b.productPurchases-a.productPurchases}) %>
+                    <% women.forEach(function (products){ %> 
+                   
+                  <li class="prod-i">
+                      <div class="prod-i-top">
+                          <a href="product?id=<%= products._id %>" class="prod-i-img"><!-- NO SPACE --><img src="<%= products.productImage[0] %>" alt="<%= products.productName %>"><!-- NO SPACE --></a>
+                          <p class="prod-i-info">
+                              <a style="cursor: pointer;" onclick="love(`<%= products._id %>`)" class="prod-i-favorites"><span>Yêu Thích</span><i class="fa fa-heart"></i></a>
+                              <a href="product?id=<%= products._id %>" class="qview-btn prod-i-qview"><span>Xem</span><i class="fa fa-search"></i></a>
+                              <a style="cursor: pointer;" onclick="compare(`<%= products._id %>`)" class="prod-i-compare"><span>So Sánh</span><i class="fa fa-bar-chart"></i></a>
+                          </p>
+                          <p class="prod-i-addwrap">
+                              <a href="product?id=<%= products._id %>" class="prod-i-add">Xem chi thiết</a>
+                          </p>
+                      </div>
+                      <h3>
+                          <a href="product?id=<%= products._id %>"><%= products.productName %></a>
+                      </h3>
+                      <p class="prod-i-price">
+                          <b><%= products.productPrice %>₫</b>
+                      </p>
+                      <div class="prod-i-skuwrapcolor">
+                        <b>Lượt mua: <%= products.productPurchases %></b>₫
+                      </div>
+                  </li>
+                <% }) %>
+              </ul>
+              </div>
+
+              <p data-frpoptab-num="3" class="fr-pop-tab-mob" data-frpoptab="#frpoptab-tab-3">Đàn ông</p>
+              <div class="flexslider prod-items fr-pop-tab" id="frpoptab-tab-3">
+                  <ul class="slides">
+                    <% var menProduct = products %> 
+                    <% var men=menProduct.filter(element=>element.productCategory=='men') %>
+                    <% men=men.sort(function(a, b){return b.productPurchases-a.productPurchases}) %>
+                    <% men.forEach(function (products){ %> 
+                   
+                  <li class="prod-i">
+                      <div class="prod-i-top">
+                          <a href="product?id=<%= products._id %>" class="prod-i-img"><!-- NO SPACE --><img src="<%= products.productImage[0] %>" alt="<%= products.productName %>"><!-- NO SPACE --></a>
+                          <p class="prod-i-info">
+                              <a style="cursor: pointer;" onclick="love(`<%= products._id %>`)" class="prod-i-favorites"><span>Yêu Thích</span><i class="fa fa-heart"></i></a>
+                              <a href="product?id=<%= products._id %>" class="qview-btn prod-i-qview"><span>Xem</span><i class="fa fa-search"></i></a>
+                              <a style="cursor: pointer;" onclick="compare(`<%= products._id %>`)" class="prod-i-compare"><span>So Sánh</span><i class="fa fa-bar-chart"></i></a>
+                          </p>
+                          <p class="prod-i-addwrap">
+                              <a href="product?id=<%= products._id %>" class="prod-i-add">Xem chi thiết</a>
+                          </p>
+                      </div>
+                      <h3>
+                          <a href="product?id=<%= products._id %>"><%= products.productName %></a>
+                      </h3>
+                      <p class="prod-i-price">
+                          <b><%= products.productPrice %>₫</b>
+                      </p>
+                      <div class="prod-i-skuwrapcolor">
+                        <b>Lượt mua: <%= products.productPurchases %></b>₫
+                      </div>
+                  </li>
+                <% }) %>
+                  </ul>
+              </div>
+
+              <p data-frpoptab-num="4" class="fr-pop-tab-mob" data-frpoptab="#frpoptab-tab-4">Đầm và Váy</p>
+              <div class="flexslider prod-items fr-pop-tab" id="frpoptab-tab-4">
+                <ul class="slides">
+                    <% var dressProduct = products %> 
+                    <% var dress=dressProduct.filter(element=>element.productType=='Đầm và Váy') %>
+                    <% dress=dress.sort(function(a, b){return b.productPurchases-a.productPurchases}) %>
+                    <% dress.forEach(function (products){ %> 
+                   
+                  <li class="prod-i">
+                      <div class="prod-i-top">
+                          <a href="product?id=<%= products._id %>" class="prod-i-img"><!-- NO SPACE --><img src="<%= products.productImage[0] %>" alt="<%= products.productName %>"><!-- NO SPACE --></a>
+                          <p class="prod-i-info">
+                              <a style="cursor: pointer;" onclick="love(`<%= products._id %>`)" class="prod-i-favorites"><span>Yêu Thích</span><i class="fa fa-heart"></i></a>
+                              <a href="product?id=<%= products._id %>" class="qview-btn prod-i-qview"><span>Xem</span><i class="fa fa-search"></i></a>
+                              <a style="cursor: pointer;" onclick="compare(`<%= products._id %>`)" class="prod-i-compare"><span>So Sánh</span><i class="fa fa-bar-chart"></i></a>
+                          </p>
+                          <p class="prod-i-addwrap">
+                              <a href="product?id=<%= products._id %>" class="prod-i-add">Xem chi thiết</a>
+                          </p>
+                      </div>
+                      <h3>
+                          <a href="product?id=<%= products._id %>"><%= products.productName %></a>
+                      </h3>
+                      <p class="prod-i-price">
+                          <b><%= products.productPrice %>₫</b>
+                      </p>
+                      <div class="prod-i-skuwrapcolor">
+                        <b>Lượt mua: <%= products.productPurchases %></b>₫
+                      </div>
+                  </li>
+                <% }) %>
+                  </ul>
+
+              </div>
+
+              <p data-frpoptab-num="5" class="fr-pop-tab-mob" data-frpoptab="#frpoptab-tab-5">Áo</p>
+              <div class="flexslider prod-items fr-pop-tab" id="frpoptab-tab-5">
+                <ul class="slides">
+                    <% var shirtProduct = products %> 
+                    <% var shirt=shirtProduct.filter(element=>element.productType=='Áo') %>
+                    <% shirt=shirt.sort(function(a, b){return b.productPurchases-a.productPurchases}) %>
+                    <% shirt.forEach(function (products){ %> 
+                   
+                  <li class="prod-i">
+                      <div class="prod-i-top">
+                          <a href="product?id=<%= products._id %>" class="prod-i-img"><!-- NO SPACE --><img src="<%= products.productImage[0] %>" alt="<%= products.productName %>"><!-- NO SPACE --></a>
+                          <p class="prod-i-info">
+                              <a style="cursor: pointer;" onclick="love(`<%= products._id %>`)" class="prod-i-favorites"><span>Yêu Thích</span><i class="fa fa-heart"></i></a>
+                              <a href="product?id=<%= products._id %>" class="qview-btn prod-i-qview"><span>Xem</span><i class="fa fa-search"></i></a>
+                              <a style="cursor: pointer;" onclick="compare(`<%= products._id %>`)" class="prod-i-compare"><span>So Sánh</span><i class="fa fa-bar-chart"></i></a>
+                          </p>
+                          <p class="prod-i-addwrap">
+                              <a href="product?id=<%= products._id %>" class="prod-i-add">Xem chi thiết</a>
+                          </p>
+                      </div>
+                      <h3>
+                          <a href="product?id=<%= products._id %>"><%= products.productName %></a>
+                      </h3>
+                      <p class="prod-i-price">
+                          <b><%= products.productPrice %>₫</b>
+                      </p>
+                      <div class="prod-i-skuwrapcolor">
+                        <b>Lượt mua: <%= products.productPurchases %></b>₫
+                      </div>
+                  </li>
+                <% }) %>
+                  </ul>
+
+              </div>
+
+              <p data-frpoptab-num="6" class="fr-pop-tab-mob" data-frpoptab="#frpoptab-tab-6">Quần</p>
+              <div class="flexslider prod-items fr-pop-tab" id="frpoptab-tab-6">
+                <ul class="slides">
+                    <% var trouserProduct = products %> 
+                    <% var trouser=trouserProduct.filter(element=>element.productType=='Quần') %>
+                    <% trouser=trouser.sort(function(a, b){return b.productPurchases-a.productPurchases}) %>
+                    <% trouser.forEach(function (products){ %> 
+                   
+                  <li class="prod-i">
+                      <div class="prod-i-top">
+                          <a href="product?id=<%= products._id %>" class="prod-i-img"><!-- NO SPACE --><img src="<%= products.productImage[0] %>" alt="<%= products.productName %>"><!-- NO SPACE --></a>
+                          <p class="prod-i-info">
+                              <a style="cursor: pointer;" onclick="love(`<%= products._id %>`)" class="prod-i-favorites"><span>Yêu Thích</span><i class="fa fa-heart"></i></a>
+                              <a href="product?id=<%= products._id %>" class="qview-btn prod-i-qview"><span>Xem</span><i class="fa fa-search"></i></a>
+                              <a style="cursor: pointer;" class="prod-i-compare" onclick="compare(`<%= products._id %>`)"><span>So Sánh</span><i class="fa fa-bar-chart"></i></a>
+                          </p>
+                          <p class="prod-i-addwrap">
+                              <a href="product?id=<%= products._id %>" class="prod-i-add">Xem chi thiết</a>
+                          </p>
+                      </div>
+                      <h3>
+                          <a href="product?id=<%= products._id %>"><%= products.productName %></a>
+                      </h3>
+                      <p class="prod-i-price">
+                          <b><%= products.productPrice %>₫</b>
+                      </p>
+                      <div class="prod-i-skuwrapcolor">
+                        <b>Lượt mua: <%= products.productPurchases %></b>₫
+                      </div>
+                  </li>
+                <% }) %>
+                  </ul>
+
+              </div>
+
+              <p data-frpoptab-num="7" class="fr-pop-tab-mob" data-frpoptab="#frpoptab-tab-7">Mũ</p>
+              <div class="flexslider prod-items fr-pop-tab" id="frpoptab-tab-7">
+                <ul class="slides">
+                    <% var capProduct = products %> 
+                    <% var cap=capProduct.filter(element=>element.productType=='Mũ') %>
+                    <% cap=cap.sort(function(a, b){return b.productPurchases-a.productPurchases}) %>
+                    <% cap.forEach(function (products){ %> 
+                   
+                  <li class="prod-i">
+                      <div class="prod-i-top">
+                          <a href="product?id=<%= products._id %>" class="prod-i-img"><!-- NO SPACE --><img src="<%= products.productImage[0] %>" alt="<%= products.productName %>"><!-- NO SPACE --></a>
+                          <p class="prod-i-info">
+                              <a style="cursor: pointer;" onclick="love(`<%= products._id %>`)" class="prod-i-favorites"><span>Yêu Thích</span><i class="fa fa-heart"></i></a>
+                              <a href="product?id=<%= products._id %>" class="qview-btn prod-i-qview"><span>Xem</span><i class="fa fa-search"></i></a>
+                              <a style="cursor: pointer;" class="prod-i-compare" onclick="compare(`<%= products._id %>`)"><span>So Sánh</span><i class="fa fa-bar-chart"></i></a>
+                          </p>
+                          <p class="prod-i-addwrap">
+                              <a href="product?id=<%= products._id %>" class="prod-i-add">Xem chi thiết</a>
+                          </p>
+                      </div>
+                      <h3>
+                          <a href="product?id=<%= products._id %>"><%= products.productName %></a>
+                      </h3>
+                      <p class="prod-i-price">
+                          <b><%= products.productPrice %>₫</b>
+                      </p>
+                      <div class="prod-i-skuwrapcolor">
+                        <b>Lượt mua: <%= products.productPurchases %></b>₫
+                      </div>
+                  </li>
+                <% }) %>
+                  </ul>
+
+              </div>
+          </div><!-- .fr-pop-tab-cont -->
+      </div><!-- .fr-pop-wrap -->
+      <div class="fr-pop-wrap">
+        <h3 class="component-ttl" ><span>SẢN PHẨM MỚI NHẤT</span></h3>
+        
+        </div>
+      <div class="fr-pop-tab-cont">
+        <div class="flexslider prod-items fr-pop-tab">
+            <ul class="slides">
+                  <% var allProduct = products %> 
+                  <% var all=allProduct.sort(function(a, b){
+                        var date1=b.productAddedDate.split(/\-/);
+                        var date2=a.productAddedDate.split(/\-/);
+                        date1 = new Date([ date1[1], date1[0], date1[2] ].join('-'))
+                        date2 = new Date([ date2[1], date2[0], date2[2] ].join('-'))
+                        return date1-date2
+                    }) %>
+                  <% all.forEach(function (products){ %> 
+                   
+                <li class="prod-i">
+                    <div class="prod-i-top">
+                        <div class="prod-sticker">
+                            <p class="prod-sticker-1">NEW</p>
+                        </div>
+                        <a style="cursor: pointer;" href="product?id=<%= products._id %>" class="prod-i-img"><!-- NO SPACE --><img src="<%= products.productImage[0] %>" alt="<%= products.productName %>"><!-- NO SPACE --></a>
+                        <p class="prod-i-info">
+                            <a style="cursor: pointer;" onclick="love(`<%= products._id %>`)" class="prod-i-favorites"><span>Yêu Thích</span><i class="fa fa-heart"></i></a>
+                            <a href="product?id=<%= products._id %>" class="qview-btn prod-i-qview"><span>Xem</span><i class="fa fa-search"></i></a>
+                            <a style="cursor: pointer;" class="prod-i-compare" onclick="compare(`<%= products._id %>`)"><span>So Sánh</span><i class="fa fa-bar-chart"></i></a>
+                        </p>
+                        <p class="prod-i-addwrap">
+                            <a href="product?id=<%= products._id %>" class="prod-i-add">Xem chi thiết</a>
+                        </p>
+                    </div>
+                    <h3>
+                        <a href="product?id=<%= products._id %>"><%= products.productName %></a>
+                    </h3>
+                    <p class="prod-i-price">
+                        <b><%= products.productPrice %>₫</b>
+                    </p>
+                    <div class="prod-i-skuwrapcolor">
+                      <b>Lượt mua: <%= products.productPurchases %></b>₫
+                    </div>
+                </li>
+              <% }) %>
+            </ul>
+        </div>
+    </div>
+    <!-- Messenger Plugin chat Code -->
+    <div id="fb-root"></div>
+
+    <!-- Your Plugin chat code -->
+    <div id="fb-customer-chat" class="fb-customerchat">
+    </div>
+
+    <script>
+      var chatbox = document.getElementById('fb-customer-chat');
+      chatbox.setAttribute("page_id", "107234105152010");
+      chatbox.setAttribute("attribution", "biz_inbox");
+    </script>
+
+    <!-- Your SDK code -->
+    <script>
+      window.fbAsyncInit = function() {
+        FB.init({
+          xfbml            : true,
+          version          : 'v12.0'
+        });
+      };
+
+      (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = 'https://connect.facebook.net/vi_VN/sdk/xfbml.customerchat.js';
+        fjs.parentNode.insertBefore(js, fjs);
+      }(document, 'script', 'facebook-jssdk'));
+    </script>
+
+
+  </section>
+</main>
+<!-- Main Content - end -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+<script>
+    function compare(id) {
+							var url = '/addCompare?id='+id
+							$.ajax({
+								url: url,
+								type: 'PUT',
+								data: {
+								},
+								success: function (data) {
+									if (data == 'Vui lòng đăng nhập') {
+										const Toast = Swal.mixin({
+							toast: true,
+							position: 'top-end',
+							showConfirmButton: false,
+							timer: 3000
+							})
+							Toast.fire({
+								type: "warning",
+								title: 'Bạn cần đăng nhập để sử dụng chức năng này'
+							})
+									}
+										const Toast = Swal.mixin({
+											toast: true,
+											position: 'top-end',
+											showConfirmButton: false,
+											timer: 3000
+										})
+										if (data == 'Sản phẩm tồn tại') {
+											Toast.fire({
+												type: "warning",
+												title: 'Đã xóa khỏi So sánh'
+											})
+											$.ajax({
+												url: '/removeCompare?id='+id,
+												type: 'DELETE',
+												data: {
+												}
+											})
+											var str = document.getElementById('compareHeader').innerText
+											str = parseInt(str) -1
+											document.getElementById('compareHeader').innerText = str
+										}else if (data == 'So sánh đầy') {
+											Toast.fire({
+												type: "warning",
+												title: 'So sánh đầy'
+											})
+										}else if(data == 'Đã thêm'){
+											Toast.fire({
+												type: "success",
+												title: 'Đã Thêm vào So sánh'
+											})
+											var str = document.getElementById('compareHeader').innerText
+											str = parseInt(str) + 1
+											document.getElementById('compareHeader').innerText = str
+										}
+								}
+							})
+						}
+						function love(id){
+								var url = '/addWishlist?id='+id
+							$.ajax({
+								url: url,
+								type: 'PUT',
+								data: {
+								},
+								success: function (data) {
+									if (data == 'Vui lòng đăng nhập') {
+										const Toast = Swal.mixin({
+							toast: true,
+							position: 'top-end',
+							showConfirmButton: false,
+							timer: 3000
+							})
+							Toast.fire({
+								type: "warning",
+								title: 'Bạn cần đăng nhập để sử dụng chức năng này'
+							})
+									}
+										const Toast = Swal.mixin({
+											toast: true,
+											position: 'top-end',
+											showConfirmButton: false,
+											timer: 3000
+										})
+										if (data == 'Sản phẩm tồn tại') {
+                                            Toast.fire({
+												type: "warning",
+												title: 'Bỏ thích'
+											})
+											$.ajax({
+												url: '/removeWishlist?id='+id,
+												type: 'DELETE',
+												data: {
+												}
+											})
+											var str=document.getElementById('wishlistHeader').innerText
+											str=parseInt(str)-1
+											document.getElementById('wishlistHeader').innerText=str
+										}else if(data == 'Đã thêm'){
+											Toast.fire({
+												type: "success",
+												title: 'Đã Thích ♥'
+											})
+											var str=document.getElementById('wishlistHeader').innerText
+											str=parseInt(str)+1
+											document.getElementById('wishlistHeader').innerText=str
+										}
+								}
+							})
+						}
+</script>

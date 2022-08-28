@@ -1,0 +1,257 @@
+<% include partials/main %> 
+
+    <head>
+        
+        <% include partials/title-meta %>
+
+        <% include partials/head-css %> 
+
+    </head>
+
+    <% include partials/body %> 
+
+        <!-- Begin page -->
+        <div id="layout-wrapper">
+
+            <% include partials/menu , orderWC %> 
+
+            <!-- ============================================================== -->
+            <!-- Start right Content here -->
+            <!-- ============================================================== -->
+            <div class="main-content">
+
+                <div class="page-content">
+                    <div class="container-fluid">
+<!-- Trigger/Open The Modal -->
+                        <% include partials/page-title %>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-body">
+        
+                                        <h4 class="card-title">Tất cả đơn hàng</h4>
+        
+                                        <div class="table-responsive">
+                                            <table class="table table-editable table-nowrap align-middle table-edits">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Mã đơn hàng</th>
+                                                        <th>Khách hàng</th>
+                                                        <th>Ngày đặt hàng</th>
+                                                        <th>Sản phẩm</th>
+                                                        <th>Trạng thái</th>
+                                                        <th>Xác nhận</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <% var index=0 %> 
+                                                    <% orders.forEach((order) => { %>
+                                                            <tr id="<%= order._id %>">
+                                                                <td><%= order._id %></td>
+                                                                <td><%= order.name %></td>
+                                                                <td><%= order.date %></td>
+                                                                <td><%= `${order.products.length} sản phẩm` %></td>
+                                                                <td style="display: flex;">
+                                                                    <div class="alert <%= order.status && (order.status || '').includes('giao hàng') ? 'alert-success' : 'alert-warning' %>" role="alert" style="padding: .25rem 0.75rem; margin: .25rem auto !important;">
+                                                                        <%= order.status %>
+                                                                    </div>
+                                                                </td>
+                                                                <td>
+                                                                    <button id="myBtn<%= index %>" onclick="myBtn(`<%= index %>`)" type="button" class="btn btn-primary waves-effect waves-light" style="margin: 0 auto !important;">
+                                                                        Chi tiết <i class="ri-arrow-right-line align-middle ms-2"></i> 
+                                                                    </button>
+                                                                    <div id="myModal<%= index %>" class="modal" style="background-color: rgba(0,0,0,0.3)">
+
+                                                                        <!-- Modal content -->
+                                                                        <div class="modal-content"  style="position: absolute;top: 64px;left: 425px;; width: 50%;height: 82%;background-color: blanchedalmond;">
+                                                                          <span class="close<%= index %>" onclick="spanBtn(`<%= index %>`)">&times;</span>
+                                                                          <h2 style="text-align: center;font-size: 33px;">ĐƠN HÀNG <%= order.products.length %> SẢN PHẨM</h2>
+                                                                          <div style="margin-left: 206px;width: 339px;font-style: italic;margin-top: 10px;">
+                                                                            <h5 style="font-size: 16px;">Tên Khách Hàng: <span style="float: right;"><%= order.name %></span></h5>
+                                                                            <h5 style="font-size: 16px;">Ngày Đặt Hàng: <span style="float: right;"><%= order.date %></span></h5>
+                                                                            <h5 style="font-size: 16px;">Trạng Thái: <span style="float: right;"><%= order.status %></span></h5>
+                                                                            <% if(order.status=='Đã giao hàng'){ %> 
+                                                                            <h5 style="font-size: 16px;">Ngày Mua: <span style="float: right;"><%= order.dateBuy %></span></h5>
+                                                                            <% } %> 
+                                                                            <% if(order.status=='Đang chờ xác nhận'){ %> 
+                                                                            <button onclick="confirmOder(`<%= order._id %>`)" style="margin-left: 90px;margin-bottom: 20px;background-color: #0bb197;">Xác nhận đang giao hàng</button>
+                                                                            <% }else if(order.status=='Đang giao hàng'){ %>
+                                                                            <button onclick="confirmBought(`<%= order._id %>`)" style="margin-left: 90px;margin-bottom: 20px;background-color: #0bb197;">Xác nhận đã giao hàng</button>
+                                                                            <% } %> 
+                                                                        </div>
+                                                                          <div style="max-width:1000px;
+                                                                          max-height:500px;
+                                                                          overflow-x:hidden;
+                                                                          overflow-y:auto;">
+                                                                            <% order.products.forEach((products) => { %>
+                                                                            <div style="display: flex;
+                                                                            width: 310px;
+                                                                            margin-top: 10px;margin-left: 50px;">
+                                                                            <% if(products.productImage.indexOf('client/images/')==-1){ %> 
+                                                                                <a class="prodlist-i-img" href="product?id=<%= products._id %> "><img style="height:150px;position:relative;" src="<%= products.productImage %>" alt=""></a>
+                                                                                <% }else{ %> 
+                                                                                    <a class="prodlist-i-img" href="product?id=<%= products._id %> "><img style="height:150px;position:relative;" src="/<%= products.productImage %>" alt=""></a>
+                                                                                    <% } %> 
+                                                                                <div style="margin-left: 50px;">
+                                                                                    <h6 style="font-weight:bold;margin: 10px 0 9px 0px;text-align: center;font-size: 20px;"><%= products.productName %></h6>
+                                                                                    <ul class="prodlist-i-props2" style="width: 200px;">
+                                                                                        <li style="min-width:169%"><span style="font-weight: 550;font-size: 18px;" class="prodlist-i-propttl"><span>Số Lượng</span></span> <span style="float: right;margin-bottom: 0px;" class="prodlist-i-propval"><%= products.quantity %></span></li>
+                                                                                        <li style="min-width:169%"><span style="font-weight: 550;font-size: 18px;" class="prodlist-i-propttl"><span>Size</span></span> <span style="float: right;margin-bottom: 0px;" class="prodlist-i-propval"><%= products.size %></span></li>
+                                                                                        <li style="min-width:169%"><span style="font-weight: 550;font-size: 18px;" class="prodlist-i-propttl"><span>Giá</span></span> <span style="float: right;margin-bottom: 0px;" class="prodlist-i-propval"><%= products.productPrice %></span></li>
+                                                                                    </ul>
+                                                                                </div>
+                                                                            </div>
+                                                                            <% }) %> 
+                                                                        </div>
+                                                                        </div>
+                                                                      
+                                                                      </div>
+                                                                </td>
+                                                            </tr>
+                                                        <% index++}) %>
+                                                </tbody>
+                                                </table>
+                                                <script>
+                                                    function handleUpdateProduct(value) {
+                                                        $(location).attr('href', '/order-detail/' + value);
+                                                    }
+                                                </script>
+                                        </div>
+        
+                                    </div>
+                                </div>
+                            </div> <!-- end col -->
+                        </div> <!-- end row -->
+
+                    </div> <!-- container-fluid -->
+                </div>
+                <!-- End Page-content -->
+                
+                <% include partials/footer %> 
+                
+            </div>
+            <!-- end main content-->
+            
+        </div>
+        <!-- END layout-wrapper -->
+
+        <% include partials/right-sidebar %> 
+
+        <% include partials/vendor-scripts %> 
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+        <script>
+            function confirmOder(id) {
+                const swalWithBootstrapButtons = Swal.mixin({
+                        customClass: {
+                            confirmButton: 'btn btn-success',
+                            cancelButton: 'btn btn-danger'
+                        },
+                        buttonsStyling: false
+                        })
+                swalWithBootstrapButtons.fire({
+                        title: 'Bạn có chắc chắn không?',
+                        text: "Xác nhận đơn hàng",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonText: 'Đồng ý',
+                        cancelButtonText: 'Hủy bỏ',
+                        reverseButtons: true
+                        }).then((result) => {
+                        if (result.isConfirmed) {
+                            $.ajax({
+                                    url:'/admin/confirmOder',
+                                    type:'PUT',
+                                    data: {
+                                        _id:id
+                                    },
+                                    success:function(data){
+                                        if(data=='Xác nhận thành công!')
+                                        {
+                                            swalWithBootstrapButtons.fire(
+                                            'Xác nhận!',
+                                            data,
+                                            'success'
+                                            ).then(data=>{
+                                                location.reload()
+                                            })
+                                        }
+                                    }
+                                })
+                        } else 
+                         {
+                            
+                        }
+                        })
+            }
+            function confirmBought(id) {
+                const swalWithBootstrapButtons = Swal.mixin({
+                        customClass: {
+                            confirmButton: 'btn btn-success',
+                            cancelButton: 'btn btn-danger'
+                        },
+                        buttonsStyling: false
+                        })
+                swalWithBootstrapButtons.fire({
+                        title: 'Bạn có chắc chắn không?',
+                        text: "Xác nhận đơn hàng",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonText: 'Đồng ý',
+                        cancelButtonText: 'Hủy bỏ',
+                        reverseButtons: true
+                        }).then((result) => {
+                        if (result.isConfirmed) {
+                            $.ajax({
+                                    url:'/admin/confirmBought',
+                                    type:'PUT',
+                                    data: {
+                                        _id:id
+                                    },
+                                    success:function(data){
+                                        if(data=='Xác nhận thành công!')
+                                        {
+                                            swalWithBootstrapButtons.fire(
+                                            'Xác nhận!',
+                                            data,
+                                            'success'
+                                            )
+                                            .then(data=>{
+                                                location.reload()
+                                            })
+                                        }
+                                    }
+                                })
+                        } else 
+                         {
+                            
+                        }
+                        })
+            }
+            function myBtn(index)
+            {
+                var modal = document.getElementById("myModal"+index);
+                modal.style.display = "block";
+            }
+            function spanBtn(index)
+            {
+                var modal = document.getElementById("myModal"+index);
+                modal.style.display = "none";
+            }
+            var modalClass=document.getElementsByClassName('modal')
+            window.onclick = function(event) {
+                modalClass.forEach(modalClass => {
+                    if (event.target == modalClass) {
+                        modalClass.style.display = "none";
+                    }
+                });
+            }
+            </script>
+        <!-- Table Editable plugin -->
+        <script src="/assets/libs/table-edits/build/table-edits.min.js"></script>
+
+        <script src="/assets/js/pages/table-editable.init.js"></script> 
+
+        <script src="/assets/js/app.js"></script>
+
+    </body>
+</html>
